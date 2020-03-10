@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class BaseController {
+public class BackgroundSystemController {
     /**
      * 首页
      * @return
