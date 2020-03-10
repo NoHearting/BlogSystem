@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <title>栏目管理</title>
@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="format-detection" content="telephone=no" />
-    <link rel="stylesheet" href="../../static/BackgroundSystem/css/x-admin.css" media="all" />
+    <link rel="stylesheet" th:href="@{/BackgroundSystem/css/x-admin.css}" media="all" />
     <style type="text/css">
         .open{
             border:1px solid #ccc;
@@ -57,7 +57,7 @@
             </td>
             <td> 栏目 </td>
             <td> 栏目 </td>
-            <td> <img src="../../static/BackgroundSystem/images/logo.png" width="200" height="100" alt="" /> </td>
+            <td> <img th:src="@{/BackgroundSystem/images/logo.png}" width="200" height="100" alt="" /> </td>
             <td> www.baidu.com</td>
             <td> 描述</td>
 
@@ -76,9 +76,9 @@
     </table>
     <div id="page"></div>
 </div>
-<script src="../../static/BackgroundSystem/lib/layui/layui.js" charset="utf-8"></script>
-<script src="../../static/BackgroundSystem/js/x-layui.js" charset="utf-8"></script>
-<script src="../../static/BackgroundSystem/js/jquery.min.js" charset="utf-8"></script>
+<script th:src="@{/BackgroundSystem/lib/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/BackgroundSystem/js/x-layui.js}" charset="utf-8"></script>
+<script th:src="@{/BackgroundSystem/js/jquery.min.js}" charset="utf-8"></script>
 <script>
     layui.use(['laydate','element','laypage','layer'], function(){
         $ = layui.jquery;//jquery
