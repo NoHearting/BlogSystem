@@ -55,5 +55,15 @@ public class BlogController {
     public String search(){
         return "Blogs/search";
     }
+
+
+    /**
+     * 博客细节 details.html
+     * @return
+     */
+    @GetMapping("detail")
+    public String details(){
+        return "Blogs/detail";
+    }
 }
 
