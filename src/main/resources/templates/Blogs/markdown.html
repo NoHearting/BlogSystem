@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>markdown</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <link rel="stylesheet" th:href="@{/editermd/css/editormd.css}" />
+    <style>
+        html{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+
+<body class="home blog custom-background round-avatars" itemscope itemtype="http://schema.org/Organization">
+
+
+    <div style="width: 80%;min-width: 800px;margin: auto;">
+        <div class="blog-content-body" id="test-editormd">
+            <textarea th:text="${blog.content}" id="article-content" style="display:none;" placeholder="markdown语言">
+
+            </textarea>
+        </div>
+    </div>
+
+
+
+
+    <script th:src="@{/editermd/examples/js/jquery.min.js}"></script>
+    <script th:src="@{/editermd/lib/marked.min.js}"></script>
+    <script th:src="@{/editermd/lib/prettify.min.js}"></script>
+    <script th:src="@{/editermd/lib/raphael.min.js}"></script>
+    <script th:src="@{/editermd/lib/underscore.min.js}"></script>
+    <script th:src="@{/editermd/lib/sequence-diagram.min.js}"></script>
+    <script th:src="@{/editermd/lib/flowchart.min.js}"></script>
+    <script th:src="@{/editermd/lib/jquery.flowchart.min.js}"></script>
+    <script th:src="@{/editermd/editormd.js}"></script>
+
+    <script>
+
+
+
+        $(function () {
+
+            // $.get("/getOne",{id:[[${id}]]},function (info) {
+            //     $("#article-content").html(info.content);
+            //
+            //
+            //
+            // });
+            editormd.markdownToHTML("test-editormd", {
+                        width:"90%",
+                        htmlDecode      : "style,script,iframe",
+                        emoji           : true,
+                        taskList        : true,
+                        tex             : true,  // 默认不解析
+                        flowChart       : true,  // 默认不解析
+                        sequenceDiagram : true  // 默认不解析
+                    });
+            window.parent.setDivHeight(findMaxWindowHeight(3));
+        });
+        /**
+         * 循环多次获取页面高度，取最高的一次
+         * @param times
+         */
+        function findMaxWindowHeight(times) {
+            var maxHeight = 0;
+            for(var i = 0;i<times;i++){
+                var height = $(document).height();
+                var bodyheight = $(document.body).height();
+                var scrollHeight = document.documentElement.scrollHeight;
+                console.log("("+i+")"+" 子页面获取的高度：\n\tdoucument:\t"+height);
+                console.log("\tbody:\t"+bodyheight+"\n\tscrollHeight:\t"+scrollHeight);
+                var temp = height>bodyheight?height:bodyheight;
+                maxHeight = maxHeight>temp?maxHeight:temp;
+            }
+            return maxHeight;
+        }
+
+
+    </script>
+
+</body>
+</html>

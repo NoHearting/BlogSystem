@@ -153,8 +153,6 @@
 
 
     <script>
-        var globalHeight = 0;
-
         /**
          * 动态设置markdown容器的高度
          *  由iframe页面的函数调用
@@ -162,21 +160,8 @@
         function setDivHeoght(height){
             $("#test").height(height);
             console.log("设置容器高度为："+height);
-            globalHeight = height
         }
 
-        $(function () {
-
-
-        })
-
-
-        /**
-         * 获取一个时间戳
-         */
-        function getTimeStamp() {
-            return new Date().getTime();
-        }
     </script>
 
 </body>
