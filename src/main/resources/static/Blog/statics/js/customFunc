@@ -1,0 +1,3 @@
+function getBlogComment(id,currentPage,pageMaxItems) {
+
+}

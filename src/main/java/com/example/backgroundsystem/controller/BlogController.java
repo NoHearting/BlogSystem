@@ -1,7 +1,9 @@
 package com.example.backgroundsystem.controller;
 
 import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.CommentPage;
 import com.example.backgroundsystem.service.BlogService;
+import com.example.backgroundsystem.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private CommentService commentService;
 
 
     @GetMapping({"/","index","index.html"})
@@ -50,7 +54,9 @@ public class BlogController {
      * @return
      */
     @GetMapping("gustbook")
-    public String gustbook(){
+    public String gustbook(Integer pos,Integer currentPage, Integer pageMaxItems, Map<String,Object> map){
+        CommentPage comments = commentService.getComments(pos, currentPage, pageMaxItems);
+        map.put("commentPage",comments);
         return "Blogs/gustbook";
     }
 
@@ -78,9 +84,10 @@ public class BlogController {
      * @return
      */
     @GetMapping("detail")
-    public String details(Integer id,Map<String,Object> map){
+    public String details(Integer id,Integer currentPage, Integer pageMaxItems,Map<String,Object> map){
         map.put("id",(Integer)id);
-        System.out.println((Integer)id);
+        CommentPage comments = commentService.getComments(id, currentPage, pageMaxItems);
+        map.put("commentPage",comments);
         return "Blogs/detail";
     }
 

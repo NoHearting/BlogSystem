@@ -32,7 +32,7 @@
 										</div>
 										<div class="col-sm-9 flex-xs-middle">
 											<div class="review-item-title">
-												<a href="detail.html" th:href="@{/detail(id=${blog.bId})}" rel="bookmark">[[${blog.title}]]</a>
+												<a href="detail.html" th:href="@{/detail(id=${blog.bId},currentPage=1,pageMaxItems=10)}" rel="bookmark">[[${blog.title}]]</a>
 											</div>
 											<div class="review-item-creator"><b>发布日期：</b>[[${blog.writeTime}]]</div>
 											<span class="review-item-info"><b>总浏览量：</b>[[${blog.readTimes}]] reads</span>

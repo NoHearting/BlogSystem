@@ -35,6 +35,7 @@ document.body.addEventListener('touchstart', function(){ });
 
                     var $body = $('body');
 
+
                     $body.scrollTop($body.scrollTop() - 1);
 
                     e.preventDefault();
