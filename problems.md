@@ -12,3 +12,14 @@
     * 右击项目名，点击Git
     * 进入Repository,点击进入push
     * 点击右下角的Push
+    
+    
+#### 提交表单出现问题：
+1. 以post的方式提交表单会出现405错误，即
+    ```
+    There was an unexpected error (type=Method Not Allowed, status=405).
+    Request method 'POST' not supported
+    ```
+    * 尝试很多方法，无法解决，不得已去掉form表单的`type=post`标识
+
+2. 执行上述操作之后再次遇到问题，提交的数据会被放到地址栏，类似于以Get的方式再次提交到页面，由于表单提交的接口和获取页面的接口并不相同，所以在获取页面的接口中捕获异常并返回初始页面

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script type='text/javascript' th:src="@{/Blog/statics/js/jquery.min.js}"></script>
 <script th:src="@{/Blog/statics/js/customFunc.js}"></script>
 <body>
 <!--
@@ -64,7 +65,7 @@
                                     </ul>
                                 </li>
                                 <li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57">
-                                    <a th:href="@{/gustbook(pos=-1,currentPage=0,pageMaxItems=10)}">留言</a>
+                                    <a th:href="@{/gustbook(pos=-1,currentPage=1,pageMaxItems=10)}">留言</a>
                                 </li>
                             </ul>
                         </div>
@@ -172,8 +173,8 @@
                         <div class="loading loading-2"></div>
                     </div>
                 </div>
-                <ul class="commentwrap" th:each="comment:${comments.comments}">
-                    <li class="comment even thread-even depth-1" id="li-comment-">
+                <ul id="comments-list" class="commentwrap">
+                    <li class="comment even thread-even depth-1" id="li-comment-" th:each="comment:${comments.comments}">
                         <div id="comment-969" class="comment_body contents">
                             <div class="profile">
                                 <a href=""><img th:src="${comment.userHeader}" class="gravatar" th:alt="${comment.userName}"></a>
@@ -191,47 +192,49 @@
                                 </div>
                                 <div class="xia info">
                                     <span><time datetime="2018-03-09" th:datetime="${comment.writeTime}">2018年3月9日</time></span>
-                                    <span><a rel='nofollow' class='comment-reply-link' href="" onclick='return addComment.moveForm( "comment-969", "969", "respond", "1202" )' aria-label='回复给小布丁'>回复</a></span>
+                                    <span><a rel='nofollow' class='comment-reply-link' href="#" th:attr="data-cId=${comment.cId},data-userName=${comment.userName}"  aria-label='回复给小布丁'>回复</a></span>
                                 </div>
                             </div>
                         </div>
                     </li>
                     <!-- #comment-## -->
                 </ul>
-                <nav id="comments-navi" th:each="iter : ${#numbers.sequence(0,${comments.totalPages<5?comments.totalPages:5})}>
-                    <a class="prev page-numbers" href="">
-                        <</a>
-                    <a class='page-numbers' href="">1</a>
-                    <a class='page-numbers' href="">2</a>
-                    <a class='page-numbers' href="">3</a>
-                    <span aria-current='page' class='page-numbers current'>4</span>
 
-                    <a th:class="${iter==0?'prev page-numbers':${iter==${comments.currentPage}?'page-numbers current':'page-numbers'}}" th:href="${page==-1?@{/gustbook(pos=-1,currentPage=${iter},pageMaxItems=10)}:javascript:getBlogComment(${id},${iter},10)}">
-                        [[${iter==0? '<' :${iter}}]]
-                    </a>
+                <nav id="comments-navi">
+
+
+                    <a  class="prev page-numbers" th:href="'javascript:void(0)'" >< </a>
+                    <a class='page-numbers' th:href="'javascript:void(0)'" >1</a>
+                    <a class='page-numbers' th:href="'javascript:void(0)'" >2</a>
+                    <a class='page-numbers' th:href="'javascript:void(0)'" >3</a>
+                    <span aria-current='page' class='page-numbers current'>4</span>
 
                 </nav>
                 <div id="respond" class="comment-respond">
                     <h6 id="replytitle" class="comment-reply-title"><a rel="nofollow" id="cancel-comment-reply-link" href="" style="display:none;">取消</a></h6>
-                    <form action="#" method="post" id="commentform" class="clearfix">
+                    <form action="#" id="commentForm" class="clearfix">
                         <div class="clearfix"></div>
                         <div class="author-info">
-                            <input type="text" name="author" id="author" placeholder="昵  称 : " value="" tabindex="1" title="Name (required)" />
-                            <input type="text" name="email" id="email" placeholder="邮  箱 : " value="" tabindex="2" title="E-mail(will not be published) required" />
-                            <input type="text" name="url" id="url" placeholder="网  址 : " value="" tabindex="3" title="Website" />
+                            <input type="text" name="userName" id="author" placeholder="昵  称 : " value="" tabindex="1" title="Name (required)" />
+                            <input type="text" name="userEmail" id="email" placeholder="邮  箱 : " value="" tabindex="2" title="E-mail(will not be published) required" />
+                            <input type="text" name="userWebSite" id="url" placeholder="网  址 : " value="" tabindex="3" title="Website" />
                         </div>
+
+                        <!-- 需要携带的数据 -->
+
+                        <input type="text" style="display: none;" id="writePosition" name="writePosition" th:value="${page}">
+                        <input type="text" style="display: none;" name="reply" id="reply" value="-1">
+                        <input type="text" style="display: none;" id="headPic" name="userHeader" th:value="@{/Blog/statics/images/d41d8cd98f00b204e9800998ecf8427e.png}">
+
                         <div class="clearfix"></div>
-                        <input type='hidden' name='comment_post_ID' value='1202' id='comment_post_ID' />
-                        <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
-                        <p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="632104fca1" /></p>
-                        <p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="87" /></p>
+
                         <div class="comment-form-info">
                             <div class="real-time-gravatar"> <img id="real-time-gravatar" th:src="@{/Blog/statics/images/d41d8cd98f00b204e9800998ecf8427e.png}" alt="gravatar头像" />
                             </div>
                             <p class="input-row">
                                 <i class="row-icon"></i>
-                                <textarea class="text_area" rows="3" cols="80" name="comment" id="comment" tabindex="4" placeholder="你不说两句吗？(°∀°)ﾉ……"></textarea>
-                                <input type="submit" name="submit" class="button" id="submit" tabindex="5" value="发送" />
+                                <textarea class="text_area" rows="3" cols="80" name="content" id="comment" tabindex="4" placeholder="你不说两句吗？(°∀°)ﾉ……"></textarea>
+                                <input type="submit" class="button" id="send" tabindex="5" value="发送" />
                             </p>
                         </div>
                     </form>

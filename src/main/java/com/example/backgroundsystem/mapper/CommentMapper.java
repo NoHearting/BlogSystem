@@ -27,6 +27,8 @@ public interface CommentMapper {
     List<Comment> getAllCommtents();
 
 
+
+
     /**
      * 查找所有留言
      *
@@ -72,4 +74,11 @@ public interface CommentMapper {
      */
     @Select("select * from comment where writePosition < 0 limit #{begin},#{num}")
     List<Comment> getAllCommentsForMessageAndPaging(@Param("begin") int begin, @Param("num") int num);
+
+    /**
+     * 插入评论
+     * @param comment
+     */
+    @Select("insert into comment(userName,userEmail,userWebSite,userHeader,content,writeTime,writePosition,reply) values(#{userName},#{userEmail},#{userWebSite},#{userHeader},#{content},#{writeTime},#{writePosition},#{reply})")
+    void insertComment(Comment comment);
 }

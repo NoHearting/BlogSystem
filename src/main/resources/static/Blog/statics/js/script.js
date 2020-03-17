@@ -99,27 +99,27 @@ document.body.addEventListener('touchstart', function(){ });
 
 	// Ajaxnvai
     $body = (window.opera) ? (document.compatMode == "CSS1Compat" ? $('html') : $('body')) : $('html,body');
-    $('#comments-navi a').live('click', function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: "GET",
-            url: $(this).attr('href'),
-            beforeSend: function () {
-                $('#comments-navi').remove();
-                $('ul.commentwrap').remove();
-                $('#loading-comments').slideDown();
-                $body.animate({scrollTop: $('#comments-list-title').offset().top - 65}, 800);
-            },
-            dataType: "html",
-            success: function (out) {
-                result = $(out).find('ul.commentwrap');
-                nextlink = $(out).find('#comments-navi');
-                $('#loading-comments').slideUp('fast');
-                $('#loading-comments').after(result.fadeIn(500));
-                $('ul.commentwrap').after(nextlink);
-            }
-        });
-    });
+    // $('#comments-navi a').live('click', function (e) {
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: "GET",
+    //         url: $(this).attr('href'),
+    //         beforeSend: function () {
+    //             $('#comments-navi').remove();
+    //             $('ul.commentwrap').remove();
+    //             $('#loading-comments').slideDown();
+    //             $body.animate({scrollTop: $('#comments-list-title').offset().top - 65}, 800);
+    //         },
+    //         dataType: "html",
+    //         success: function (out) {
+    //             result = $(out).find('ul.commentwrap');
+    //             nextlink = $(out).find('#comments-navi');
+    //             $('#loading-comments').slideUp('fast');
+    //             $('#loading-comments').after(result.fadeIn(500));
+    //             $('ul.commentwrap').after(nextlink);
+    //         }
+    //     });
+    // });
 
 	if ( $( '.welcome' )[0] ){
 	$( '.author-info' ).hide();

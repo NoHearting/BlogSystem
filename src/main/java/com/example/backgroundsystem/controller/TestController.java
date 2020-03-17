@@ -2,6 +2,7 @@ package com.example.backgroundsystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -219,4 +220,18 @@ public class TestController {
                 "* 10吉比特以太网\n" +
                 "* 使用以太网进行宽带接入\n");
     }
+
+
+    @GetMapping("/testForm")
+    public String testForm(){
+        return "test/testForm";
+    }
+
+    @ResponseBody
+    @PostMapping("testFormInfo")
+    public String testFormInfo(String name){
+        System.out.println(name);
+        return "success";
+    }
+
 }

@@ -1,10 +1,14 @@
 package com.example.backgroundsystem.service.impl;
 
+import com.example.backgroundsystem.domain.Comment;
 import com.example.backgroundsystem.domain.CommentPage;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.CommentService;
+import com.example.backgroundsystem.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -31,6 +35,13 @@ public class CommentServiceImpl implements CommentService {
         return commentPage;
     }
 
+    @Override
+    public void insertComment(Comment comment) {
+        comment.setWriteTime(new Date());
+        LoggerUtils.info(comment.toString());
+        commentMapper.insertComment(comment);
+    }
+
     /**
      * 计算查询的起始位置
      * @param pageMaxItems
@@ -39,6 +50,9 @@ public class CommentServiceImpl implements CommentService {
      */
     int calBeginItemIndex(int pageMaxItems,int currentPage){
         int begin = 0;
+        if(currentPage<1){
+            return begin;
+        }
         begin = pageMaxItems*(currentPage-1);
         return begin;
     }

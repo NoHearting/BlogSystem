@@ -55,9 +55,16 @@ public class BlogController {
      */
     @GetMapping("gustbook")
     public String gustbook(Integer pos,Integer currentPage, Integer pageMaxItems, Map<String,Object> map){
-        CommentPage comments = commentService.getComments(pos, currentPage, pageMaxItems);
-        map.put("commentPage",comments);
-        return "Blogs/gustbook";
+        try{
+            CommentPage comments = commentService.getComments(pos, currentPage, pageMaxItems);
+            map.put("commentPage",comments);
+            return "Blogs/gustbook";
+        }catch (Exception e){
+            CommentPage comments = commentService.getComments(-1, 1, 10);
+            map.put("commentPage",comments);
+            return "Blogs/gustbook";
+        }
+
     }
 
     /**

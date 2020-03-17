@@ -54,9 +54,18 @@
 
         <div th:replace="Blogs/common::footer"></div>
 	</body>
+    <script type='text/javascript' th:src="@{/Blog/statics/js/customFunc.js}"></script>
     <script>
         $(function () {
-            alert("page: "+[[${page}]]);
-        })
+            
+            updateNavTheATags(-1,[[${commentPage.currentPage}]],[[${commentPage.totalPages}]]);
+            addClickToReplyATags();
+            addActionForTheForm();
+
+
+
+        });
+
+
 	</script>
 </html>
