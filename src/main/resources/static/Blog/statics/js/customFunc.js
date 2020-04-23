@@ -67,7 +67,7 @@ function updateNavTheATags(pos,currentPage,totalPages) {
             end = 4;
         }else if(currPage+2 >= totalPages){
             end = totalPages;
-            begin = totalPages - 4;
+            begin = totalPages - 3;
         }else{
             begin = currPage - 1;
             end = currPage + 2;
@@ -89,10 +89,60 @@ function updateNavTheATags(pos,currentPage,totalPages) {
 }
 
 /**
+ * 更新博客下面的翻页按钮
+ * @param s 关键字
+ * @param currentPage  当前页码
+ * @param totalPages  总的页面数
+ */
+function updateNavTheATagsForBlog(s,currentPage,totalPages) {
+    console.log("开始更新！！！")
+    var container = $("#comments-navi");
+    var aTags = '';
+    var url = '';
+    var begin = 1;
+    var end = 0;
+    var currPage = currentPage;
+    var totalPages = totalPages;
+    console.log("总页面： "+totalPages);
+    if(totalPages <= 4){
+        begin = 1;
+        end = totalPages;
+    }else{
+        if(currPage==0||currPage-1<0){
+            begin = 1;
+            end = 4;
+        }else if(currPage+2 >= totalPages){
+            end = totalPages;
+            begin = totalPages - 3;
+        }else{
+            begin = currPage - 1;
+            end = currPage + 2;
+        }
+    }
+
+
+
+    aTags += '<a  class="prev page-numbers" href="javascript:updateBlogsWithATag('+s+','+(begin-1)+')" >< </a>'
+    for(var i = begin;i<=end;i++){
+        if(i == currPage){
+            aTags += '<span aria-current="page" class="page-numbers current">'+i+'</span>';
+        }else{
+            aTags += '<a class="page-numbers" href="javascript:updateBlogsWithATag('+s+','+i+')" >'+i+'</a>'
+        }
+    }
+    container.empty();
+    container.append(aTags);
+}
+
+
+
+
+
+/**
  * 作为评论翻页按钮的响应操作
  * 获取评论并更新在页面上同时更新按钮标签
- * @param pos
- * @param currentPage
+ * @param pos   pos>0,表示是某一个博客下的评论，否则为留言
+ * @param currentPage  当前页码
  * @param pageMaxItems
  */
 function updateCommentsWithATag(pos,currentPage,pageMaxItems) {
@@ -155,6 +205,44 @@ function updateCommentsWithATag(pos,currentPage,pageMaxItems) {
 }
 
 /**
+ * 作为博客翻页按钮的响应操作
+ * 获取博客并更新在页面上同时更新按钮标签
+ * @param s 关键字
+ * @param currentPage 当前页码
+ */
+function updateBlogsWithATag(s,currentPage){
+    log("customFunc.js","updateBlogsWithATag","开始："+currentPage);
+    $.post("/searchPage",{s:s,currentPage:currentPage},function (info) {
+        var container = $("#search-blogs");
+        container.empty();
+        var obj = JSON.parse(info);
+        var blogs = obj.blogPage.blogs;
+        var div  = '';
+        for(var i = 0;i<blogs.length;i++){
+            div += '<div class="archive-post" >\n' +
+                '\n' +
+                '<div class="type">\n' +
+                '<div class="mask"><i class="iconfont">&#xe603;</i></div>\n' +
+                '</div>\n' +
+                '<h2 class="archive-title" style="color: #">\n' +
+                '<span>\n' +
+                '<a href="/detailDefault/'+blogs[i].bId+'"  class="search-title" >'+blogs[i].title+'</a>\n' +
+                '</span>\n' +
+                '<div class="post-time" >'+blogs[i].writeTime+'</div>\n' +
+                '</h2>\n' +
+                '<div class="post-category">\n' +
+                '<a href="/detailDefault/'+blogs[i].bId+'"  rel="category tag">Happen</a>\n' +
+                '</div>\n' +
+                '</div>';
+        }
+        container.append(div);
+        updateNavTheATagsForBlog(s,obj.blogPage.totalPages);
+
+
+    });
+}
+
+/**
  * 设置评论提交表单的操作,留言和评论都统一使用这个函数
  * 提交一次评论后会刷新所有评论
  * 刷新评论需要确定刷新的是【博客】下的评论还是【留言】下的评论
@@ -183,3 +271,17 @@ function addActionForTheForm() {
     });
 }
 
+/**
+ * 给搜索页面的列表添加一个响应事件，使其能够正确的转到相应的页面显示博客
+ * 此函数在搜索页面被调用
+ */
+function addIntoArticleOnclickEvent() {
+    $(".search-title").click(function () {
+        var thisObj = $(this);
+        var id = thisObj.attr("data-bId");
+        log("customFunc.js","addIntoArticleOnclickEvent",id);
+        $.post("/detail",{"id":id,"currentPage":1,"pageMaxItems":10},function (info) {
+
+        });
+    })
+}

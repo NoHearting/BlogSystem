@@ -1,8 +1,10 @@
 package com.example.backgroundsystem.service.impl;
 
 import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.BlogPage;
 import com.example.backgroundsystem.mapper.BlogMapper;
 import com.example.backgroundsystem.service.BlogService;
+import com.example.backgroundsystem.service.utils.PageUtils;
 import com.example.backgroundsystem.utils.LoggerUtils;
 import com.example.backgroundsystem.utils.MyDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +69,21 @@ public class BlogServiceImpl implements BlogService {
             LoggerUtils.error(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<Blog> getBlogsByKeyword(String s) {
+        return blogMapper.getBlogsByKeyword(s);
+    }
+
+    @Override
+    public BlogPage getBlogsByKeywordAndPage(String keyword, int currentPage, int pageMaxItems) {
+        int totalItems = blogMapper.getBlogCountByKeyword(keyword);
+        int begin = PageUtils.calBeginItemIndex(pageMaxItems,currentPage);
+        int totalPages = PageUtils.calTotalPages(totalItems,pageMaxItems);
+        List<Blog> blogs = blogMapper.getBlogsByKeywordAndPage(keyword, begin, pageMaxItems);
+
+        return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
     }
 
     /**

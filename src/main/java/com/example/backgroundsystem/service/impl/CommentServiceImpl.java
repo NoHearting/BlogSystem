@@ -4,6 +4,7 @@ import com.example.backgroundsystem.domain.Comment;
 import com.example.backgroundsystem.domain.CommentPage;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.CommentService;
+import com.example.backgroundsystem.service.utils.PageUtils;
 import com.example.backgroundsystem.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,8 @@ public class CommentServiceImpl implements CommentService {
         CommentPage commentPage = new CommentPage();
 
         int totalItems = pos >= 0 ? commentMapper.getTotalCountById(pos):commentMapper.getTotalCount();
-        int totalPages = calTotalPages(totalItems,pageMaxItems);
-        int begin = calBeginItemIndex(pageMaxItems,currentPage);
+        int totalPages = PageUtils.calTotalPages(totalItems,pageMaxItems);
+        int begin = PageUtils.calBeginItemIndex(pageMaxItems,currentPage);
 
         commentPage.setTotalItems(totalItems);
         commentPage.setCurrentPage(currentPage);
@@ -53,34 +54,7 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.insertComment(comment);
     }
 
-    /**
-     * 计算查询的起始位置
-     * @param pageMaxItems  页面最大评论条数
-     * @param currentPage   当前页面页码
-     * @return
-     */
-    int calBeginItemIndex(int pageMaxItems,int currentPage){
-        int begin = 0;
-        if(currentPage<1){
-            return begin;
-        }
-        begin = pageMaxItems*(currentPage-1);
-        return begin;
-    }
 
-    /**
-     * 计算总页面条数
-     * @param totalItems   总条目数
-     * @param pageMaxItems  页面最大条目数
-     * @return
-     */
-    int calTotalPages(int totalItems,int pageMaxItems){
-        if(totalItems < pageMaxItems){
-            return 1;
-        }else if(totalItems%pageMaxItems==0){
-            return totalItems/pageMaxItems;
-        }else{
-            return totalItems/pageMaxItems+1;
-        }
-    }
+
+
 }
