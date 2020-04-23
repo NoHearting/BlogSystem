@@ -53,7 +53,13 @@
 
         <div th:replace="Blogs/common::footer"></div>
 	</body>
+	<script type="text/javascript" th:src="@{/Blog/statics/js/customFunc.js}"></script>
     <script>
+		$(function () {
+            updateNavTheATags([[${id}]],[[${commentPage.currentPage}]],[[${commentPage.totalPages}]]);
+            // addClickToReplyATags();
+            addActionForTheForm();
+        });
         /**
          * 动态设置markdown容器的高度
          *  由iframe页面的函数调用

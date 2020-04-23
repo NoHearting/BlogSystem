@@ -46,3 +46,14 @@ spring:
 
 server:
   port: 80  # 设置端口为80
+
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  #type-aliases-package: com.example.entity
+
+logging:
+  level:
+    com:
+      example:
+        mapper: debug

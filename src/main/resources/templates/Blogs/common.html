@@ -80,7 +80,7 @@
 </div>
 <header th:fragment="header" id="masthead" class="overlay animated from-bottom" itemprop="brand">
     <div class="site-branding text-center">
-        <a href="">
+        <a th:href="@{/}">
             <figure>
                 <img class="custom-logo avatar" th:src="@{/Blog/statics/images/omikron.png}" />
             </figure>
@@ -165,7 +165,7 @@
     <div class="comment-area">
         <section class="comments">
             <div class="comments-main">
-                <div id="comments-list-title"><span>[[${comments.comments.size()}]]</span> 条评论 </div>
+                <div id="comments-list-title"><span id="comment-counts">[[${comments.totalItems}]]</span> 条评论 </div>
                 <div id="loading-comments">
                     <div class="host">
                         <div class="loading loading-0"></div>
@@ -192,7 +192,9 @@
                                 </div>
                                 <div class="xia info">
                                     <span><time datetime="2018-03-09" th:datetime="${comment.writeTime}">2018年3月9日</time></span>
-                                    <span><a rel='nofollow' class='comment-reply-link' href="#" th:attr="data-cId=${comment.cId},data-userName=${comment.userName}"  aria-label='回复给小布丁'>回复</a></span>
+
+                                    <!-- [[${comment.cId}]]会转义特殊的字符，直接将中文转义为Unicode编码，所以中文使用[(${comment.userName})]来解析 -->
+                                    <span><a rel='nofollow' class='comment-reply-link' th:inline="text" th:onclick="replyTheComment([[${comment.cId}]],'[(${comment.userName})]')"  style="cursor: pointer;" aria-label='回复给小布丁'>回复</a></span>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +214,8 @@
                 </nav>
                 <div id="respond" class="comment-respond">
                     <h6 id="replytitle" class="comment-reply-title"><a rel="nofollow" id="cancel-comment-reply-link" href="" style="display:none;">取消</a></h6>
-                    <form action="#" id="commentForm" class="clearfix">
+                    <!-- debug submit响应函数在customFunc.js中146行 -->
+                    <form action="javascript:void(0);" id="commentForm" class="clearfix" method="post">
                         <div class="clearfix"></div>
                         <div class="author-info">
                             <input type="text" name="userName" id="author" placeholder="昵  称 : " value="" tabindex="1" title="Name (required)" />
@@ -222,8 +225,13 @@
 
                         <!-- 需要携带的数据 -->
 
+                        <!-- 将该评论所在的位置信息也保存发送 -->
                         <input type="text" style="display: none;" id="writePosition" name="writePosition" th:value="${page}">
+
+                        <!-- replay标志是否为回复某条评论的评论 -->
                         <input type="text" style="display: none;" name="reply" id="reply" value="-1">
+
+                        <!-- 将用户评论使用的头像也保存 -->
                         <input type="text" style="display: none;" id="headPic" name="userHeader" th:value="@{/Blog/statics/images/d41d8cd98f00b204e9800998ecf8427e.png}">
 
                         <div class="clearfix"></div>

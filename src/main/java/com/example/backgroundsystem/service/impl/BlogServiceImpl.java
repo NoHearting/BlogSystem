@@ -17,7 +17,8 @@ public class BlogServiceImpl implements BlogService {
     BlogMapper blogMapper;
 
     /**
-     * 获取所有博客处理之后并返回
+     * 获取所有博客处理之后并返回,可以选择是否将博客内容截取（截断）
+     * 在页面上需要简短显示，所以需要截取
      * @param isCut 判断是否截取博客内容
      * @return
      */

@@ -57,13 +57,13 @@
     <script type='text/javascript' th:src="@{/Blog/statics/js/customFunc.js}"></script>
     <script>
         $(function () {
-            
+
+            //第一次加载页面时添加评论
             updateNavTheATags(-1,[[${commentPage.currentPage}]],[[${commentPage.totalPages}]]);
-            addClickToReplyATags();
+            // addClickToReplyATags();
+
+            //注册添加评论的表单的提交事件
             addActionForTheForm();
-
-
-
         });
 
 

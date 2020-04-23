@@ -15,7 +15,7 @@ public class CommentTest {
 
     @Test
     public void testSelect(){
-        LoggerUtils.error(commentMapper.getAllCommtents().toString());
+        LoggerUtils.error(commentMapper.getAllComments().toString());
         LoggerUtils.warn(commentMapper.getAllCommentsForMessageAndPaging(0,10).toString());
 
 

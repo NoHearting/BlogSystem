@@ -222,13 +222,13 @@ public class TestController {
     }
 
 
-    @GetMapping("/testForm")
+    @RequestMapping("/testForm")
     public String testForm(){
         return "test/testForm";
     }
 
     @ResponseBody
-    @PostMapping("testFormInfo")
+    @RequestMapping("testFormInfo")
     public String testFormInfo(String name){
         System.out.println(name);
         return "success";

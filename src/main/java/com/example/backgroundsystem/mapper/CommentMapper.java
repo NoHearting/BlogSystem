@@ -20,13 +20,27 @@ public interface CommentMapper {
     int getTotalCount();
 
     /**
+     * 获取某个博客下的评论的条数
+     * @param id  博客id
+     * @return
+     */
+    @Select("select count(*) from comment where writePosition = #{id}")
+    int getTotalCountById(int id);
+
+    /**
      * 查询所有评论，无论是评论博客或者留言
      * @return
      */
     @Select("select * from comment")
-    List<Comment> getAllCommtents();
+    List<Comment> getAllComments();
 
-
+    /**
+     * 查询一个博客下的所有评论
+     * @param id  博客id
+     * @return
+     */
+    @Select("select * from comment where writePosition = #{id}")
+    List<Comment> getAllCommentsById(int id);
 
 
     /**

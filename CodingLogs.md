@@ -16,3 +16,19 @@
     
 #### 2020年3月14日
 * 完成查找特定博客并显示的功能，目前只能显示主页上的所有博客和特定博客。
+
+
+#### 2020年4月22日
+##### 1、配置Mybatis Log Plugin，打印SQL执行日志
+在配置文件中添加配置
+```$xslt
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  #type-aliases-package: com.example.entity
+
+logging:
+  level:
+    com:
+      example:
+        mapper: debug
+```

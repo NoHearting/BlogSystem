@@ -5,20 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-<form action="#" method="post">
+<form class="" th:action="@{/test/testFormInfo}" method="post">
     <input type="text" name="name">
     <input type="submit" value="提交">
 </form>
 </body>
 <script type='text/javascript' th:src="@{/Blog/statics/js/jquery.min.js}"></script>
 <script type='text/javascript' th:src="@{/Blog/statics/js/customFunc.js}"></script>
-<script>
+<script type='text/javascript'>
    $(function () {
-       $("form").submit(function (data) {
+       $("").submit(function (data) {
+           console.log(submit);
            $.post("/test/testFormInfo",$(this).serialize(data),function (info) {
                console.log(info);
            });
-       })
+       });
    })
 </script>
 </html>
