@@ -7,6 +7,6 @@ public interface TestMapper {
 
 
     @Insert("insert into blog(title,content,writeTime,readTimes) values(#{title},#{content},#{writeTime},#{readTimes})")
-    public void insertToBlog(Blog blog);
+    void insertToBlog(Blog blog);
 
 }

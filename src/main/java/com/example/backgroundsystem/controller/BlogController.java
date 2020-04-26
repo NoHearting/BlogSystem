@@ -2,9 +2,10 @@ package com.example.backgroundsystem.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.CommentPage;
+import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.service.BlogService;
 import com.example.backgroundsystem.service.CommentService;
+import com.example.backgroundsystem.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,8 @@ public class BlogController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private LinkService linkService;
 
     @GetMapping({"/","index","index.html"})
     public String index(Map<String,Object> map){
@@ -75,7 +78,8 @@ public class BlogController {
      * @return
      */
     @GetMapping("link")
-    public String link(){
+    public String link(Map<String,Object>map){
+        map.put("links",linkService.listLinked());
         return "Blogs/link";
     }
 
@@ -161,10 +165,21 @@ public class BlogController {
         return "Blogs/markdown";
     }
 
+
+
     @ResponseBody
     @RequestMapping("/getOne")
     public Blog getBlogById(Integer id){
         return blogService.getBlogById(id);
+    }
+
+
+    /**
+     * 后台添加博客
+     */
+    @RequestMapping("/insertBlog")
+    public void insertBlog(){
+
     }
 }
 

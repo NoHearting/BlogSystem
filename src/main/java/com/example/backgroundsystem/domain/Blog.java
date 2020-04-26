@@ -2,32 +2,20 @@ package com.example.backgroundsystem.domain;
 
 import com.example.backgroundsystem.utils.MyDate;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 
-@AllArgsConstructor   // 添加全参构造器
-public class Blog {
-    private int bId;
-    private String title;
+@NoArgsConstructor
+public class Blog extends BaseBlog{
     private String content;
-    private Date writeTime;
     private int readTimes;
 
-    public int getBId() {
-        return bId;
-    }
-
-    public void setBId(int bId) {
-        this.bId = bId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public Blog(int bId,String title,String content,Date writeTime,int readTimes){
+        super(bId, title, writeTime);
+        this.content = content;
+        this.readTimes = readTimes;
     }
 
     public String getContent() {
@@ -38,14 +26,6 @@ public class Blog {
         this.content = content;
     }
 
-    public Date getWriteTime() {
-        return writeTime;
-    }
-
-    public void setWriteTime(Date writeTime) {
-        this.writeTime = writeTime;
-    }
-
     public int getReadTimes() {
         return readTimes;
     }
@@ -54,14 +34,13 @@ public class Blog {
         this.readTimes = readTimes;
     }
 
-
     @Override
     public String toString() {
         return "Blog{" +
-                "bId=" + bId +
-                ", title='" + title + '\'' +
+                "bId=" + getbId() +
+                ", title='" + getTitle() + '\'' +
                 ", content='" + content + '\'' +
-                ", writeTime=" + writeTime +
+                ", writeTime=" + getWriteTime() +
                 ", readTimes=" + readTimes +
                 '}';
     }

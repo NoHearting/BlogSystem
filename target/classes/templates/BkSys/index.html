@@ -52,7 +52,7 @@
         <li class="layui-nav-item"> <a href="javascript:;">admin</a>
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
-            <dd><a href="javascript:;" onclick="member_show('张三','member-show.html','10001','360','400')">个人信息</a></dd>
+            <dd><a href="javascript:;" th:onclick="member_show('张三','/admin/membershow','10001','360','400')">个人信息</a></dd>
             <dd><a href="">切换帐号</a></dd>
             <dd><a href="javascript:;" onclick="logout()">退出</a></dd>
           </dl>
@@ -86,6 +86,7 @@
             <dd class="">
             <dd class=""> <a href="javascript:;" th:_href="@{/admin/articletypelist}"> <cite>文章类型列表</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" th:_href="@{/admin/articlelist}"> <cite>文章列表</cite> </a> </dd>
+            <dd><a href="javascript:;" th:_href="@{/admin/articleadd}"><cite>写文章</cite></a></dd>
             </dd>
           </dl>
         </li>

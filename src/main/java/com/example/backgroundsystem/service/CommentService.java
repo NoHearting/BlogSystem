@@ -1,7 +1,7 @@
 package com.example.backgroundsystem.service;
 
 import com.example.backgroundsystem.domain.Comment;
-import com.example.backgroundsystem.domain.CommentPage;
+import com.example.backgroundsystem.domain.page.CommentPage;
 
 public interface CommentService {
 

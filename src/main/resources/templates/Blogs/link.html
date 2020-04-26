@@ -34,44 +34,22 @@
 					<div class="links">
 						<h3 class="catalog-title">Life Blog</h3>
 						<div class="catalog-description"></div>
-						<div class="catalog-share">4 items in collection</div>
-						<div class="userItems">
-							<div class="userItem">
+						<div class="catalog-share">[[${links.size()}]] items in collection</div>
+						<div class="userItems" >
+							<div class="userItem" th:each="link:${links}">
 								<div class="userItem--inner">
-									<div class="userItem-content"><img alt='' th:src='@{/Blog/statics/images/8e5da64c712d2bb59235d8d746108cb1.jpeg}' class='avatar avatar-64 photo' height='64' width='64' />
+									<!-- /Blog/statics/images/8e5da64c712d2bb59235d8d746108cb1.jpeg -->
+									<div class="userItem-content">
+										<a th:href="${link.webUrl}" target="_blank">
+											<img alt='' th:src='${link.headPicture}' class='avatar avatar-64 photo' height='64' width='64' />
+                                        </a>
 										<div class="userItem-name">
-											<a class="link link--primary" href="#" target="_blank">Akina</a>
+											<a class="link link--primary" th:href="${link.webUrl}" th:text="${link.friendName}" href="#" target="_blank">Akina</a>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="userItem">
-								<div class="userItem--inner">
-									<div class="userItem-content"><img alt='' th:src='@{/Blog/statics/images/89aeed9e656e1f7fbb04691aa3b38252.jpeg}' class='avatar avatar-64 photo' height='64' width='64' />
-										<div class="userItem-name">
-											<a class="link link--primary" href="#" target="_blank">Dearzd</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="userItem">
-								<div class="userItem--inner">
-									<div class="userItem-content"><img alt='' th:src='@{/Blog/statics/images/d52a89521eb0cdb4efb343fb63ce3986.jpeg}' class='avatar avatar-64 photo' height='64' width='64' />
-										<div class="userItem-name">
-											<a class="link link--primary" href="#" target="_blank">Meow</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="userItem">
-								<div class="userItem--inner">
-									<div class="userItem-content"><img alt='' th:src='@{/Blog/statics/images/22278c1d83002246dca48b52e306b1c9.jpeg}' class='avatar avatar-64 photo' height='64' width='64' />
-										<div class="userItem-name">
-											<a class="link link--primary" href="#" target="_blank">Tokin</a>
-										</div>
-									</div>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</section>

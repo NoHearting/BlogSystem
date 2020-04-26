@@ -1,16 +1,19 @@
-package com.example.backgroundsystem.domain;
+package com.example.backgroundsystem.domain.page;
 
+import com.example.backgroundsystem.domain.BaseBlog;
+import com.example.backgroundsystem.domain.Blog;
 import lombok.*;
 
 import java.util.List;
 
 /**
- * 分页查询评论
+ * 分页查询博客
  */
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class CommentPage {
+public class BlogPage {
+
     @Getter
     @Setter
     private int totalItems;   // 总的条目数
@@ -29,5 +32,5 @@ public class CommentPage {
 
     @Getter
     @Setter
-    private List<Comment> comments;   // 查询的评论
+    private List<? extends BaseBlog> blogs;   // 查询的评论
 }

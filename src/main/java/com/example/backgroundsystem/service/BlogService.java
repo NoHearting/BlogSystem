@@ -1,19 +1,21 @@
 package com.example.backgroundsystem.service;
 
 import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.BlogPage;
+import com.example.backgroundsystem.domain.page.BlogPage;
 
 import java.util.List;
 
 public interface BlogService {
 
-    public List<Blog> getAllBlog(Boolean isCut);
+    List<Blog> getAllBlog(Boolean isCut);
 
-    public void dealBlogData(List<Blog> blogs,Integer pos);
+    void dealBlogData(List<Blog> blogs,Integer pos);
 
-    public Blog getBlogById(Integer id);
+    Blog getBlogById(Integer id);
 
-    public List<Blog> getBlogsByKeyword(String s);
+    List<Blog> getBlogsByKeyword(String s);
 
-    public BlogPage getBlogsByKeywordAndPage(String keyword, int currentPage, int pageMaxItems);
+    BlogPage getBlogsByKeywordAndPage(String keyword, int currentPage, int pageMaxItems);
+
+    BlogPage listBlogNoContent(int currentPage,int pageMaxItems);
 }

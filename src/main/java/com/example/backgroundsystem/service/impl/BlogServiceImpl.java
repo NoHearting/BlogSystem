@@ -1,12 +1,13 @@
 package com.example.backgroundsystem.service.impl;
 
 import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.BlogPage;
+import com.example.backgroundsystem.domain.BlogNoContent;
+import com.example.backgroundsystem.domain.page.BlogPage;
 import com.example.backgroundsystem.mapper.BlogMapper;
 import com.example.backgroundsystem.service.BlogService;
+import com.example.backgroundsystem.service.utils.CommonUtils;
 import com.example.backgroundsystem.service.utils.PageUtils;
 import com.example.backgroundsystem.utils.LoggerUtils;
-import com.example.backgroundsystem.utils.MyDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class BlogServiceImpl implements BlogService {
             List<Blog> allBlogs = blogMapper.getAllBlogs();
 
             //转换日期变量
-            dealData(allBlogs);
+            CommonUtils.dealDate(allBlogs);
             if(!isCut){
                 return allBlogs;
             }else{
@@ -82,20 +83,29 @@ public class BlogServiceImpl implements BlogService {
         int begin = PageUtils.calBeginItemIndex(pageMaxItems,currentPage);
         int totalPages = PageUtils.calTotalPages(totalItems,pageMaxItems);
         List<Blog> blogs = blogMapper.getBlogsByKeywordAndPage(keyword, begin, pageMaxItems);
+        CommonUtils.dealDate(blogs);   // 格式化日期为yyyy-MM-dd
 
         return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
     }
 
     /**
-     * 处理博客信息
-     * 将博客创作日期格式化为 yyyy-MM-dd HH:mm:ss
-     * @param blogs
+     * 分页查询博客，但是不封装博客内容
+     * 作为后台查询显示，减少内容传输的消耗
+     * @param currentPage
+     * @param pageMaxItems
+     * @return
      */
-    public void dealData(List<Blog> blogs){
-        for(int i = 0;i<blogs.size();i++){
-            Blog blog = blogs.get(i);
-            // MyDate默认格式化为yy-MM-dd
-            blog.setWriteTime(new MyDate(blog.getWriteTime().getTime()));
-        }
+    @Override
+    public BlogPage listBlogNoContent(int currentPage, int pageMaxItems) {
+        int totalItems = blogMapper.countBlog();
+        int begin = PageUtils.calBeginItemIndex(pageMaxItems,currentPage);
+        int totalPages = PageUtils.calTotalPages(totalItems,pageMaxItems);
+        List<BlogNoContent> blogs = blogMapper.listBlogNoContent(begin, pageMaxItems);
+
+        CommonUtils.dealDateExact(blogs);   // 格式化日期为yyyy-MM-dd HH:mm:ss
+        LoggerUtils.debug(blogs.toString());
+        return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
     }
+
+
 }

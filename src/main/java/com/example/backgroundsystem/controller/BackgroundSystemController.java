@@ -1,13 +1,26 @@
 package com.example.backgroundsystem.controller;
 
 
+import com.example.backgroundsystem.mapper.BlogMapper;
+import com.example.backgroundsystem.service.BlogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
+
+/**
+ * 这要进行后台系统的页面映射
+ */
 @Controller
 @RequestMapping("/admin")
 public class BackgroundSystemController {
+
+    @Autowired
+    private BlogService blogService;
+
     /**
      * 首页
      * @return
@@ -72,11 +85,14 @@ public class BackgroundSystemController {
     }
 
     /**
+     *
      * 文章列表 article-list.html
+     * 获取当前页码的博客，默认当前页码为1，页码最大条目数为10
      * @return
      */
     @GetMapping("articlelist")
-    public String articleList(){
+    public String articleList(Map<String,Object> map){
+        map.put("blogPage",blogService.listBlogNoContent(1,10));
         return "BkSys/article-list";
     }
 
@@ -87,6 +103,18 @@ public class BackgroundSystemController {
     @GetMapping("articletypelist")
     public String articleTypeList(){
         return "BkSys/articletype-list";
+    }
+
+    /**
+     * 添加文章
+     */
+    @GetMapping("articleadd")
+    public String articleAdd(){return "BkSys/article-add";}
+
+
+    @GetMapping("writeArticle")
+    public String writeArticle(){
+        return "BkSys/write-article";
     }
 
     /**
@@ -174,7 +202,7 @@ public class BackgroundSystemController {
      * 显示会员 member-show.html
      * @return
      */
-    @GetMapping("membershow")
+    @RequestMapping("membershow")
     public String memberShow(){
         return "BkSys/member-show";
     }

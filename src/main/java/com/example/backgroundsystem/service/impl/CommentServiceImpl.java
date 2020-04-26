@@ -1,7 +1,7 @@
 package com.example.backgroundsystem.service.impl;
 
 import com.example.backgroundsystem.domain.Comment;
-import com.example.backgroundsystem.domain.CommentPage;
+import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.CommentService;
 import com.example.backgroundsystem.service.utils.PageUtils;

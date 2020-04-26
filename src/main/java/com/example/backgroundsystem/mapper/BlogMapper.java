@@ -1,6 +1,7 @@
 package com.example.backgroundsystem.mapper;
 
 import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.BlogNoContent;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,7 +14,7 @@ public interface BlogMapper {
      * @return
      */
     @Select("select * from blog")
-    public List<Blog> getAllBlogs();
+    List<Blog> getAllBlogs();
 
 
     /**
@@ -22,15 +23,28 @@ public interface BlogMapper {
      * @return
      */
     @Select("select * from blog where bId = #{id}")
-    public Blog getBlogById(Integer id);
+    Blog getBlogById(Integer id);
+
 
 
     @Select("select * from blog where title like CONCAT('%',#{s},'%')")
-    public List<Blog> getBlogsByKeyword(String s);
+    List<Blog> getBlogsByKeyword(String s);
 
     @Select("select * from blog where  title like CONCAT('%',#{s},'%') limit #{begin},#{num}")
-    public List<Blog> getBlogsByKeywordAndPage(@Param("s") String s, @Param("begin") int begin, @Param("num") int num);
+    List<Blog> getBlogsByKeywordAndPage(@Param("s") String s, @Param("begin") int begin, @Param("num") int num);
 
     @Select("select count(*) from blog where title like CONCAT('%',#{s},'%')")
-    public int getBlogCountByKeyword(String s);
+    int getBlogCountByKeyword(String s);
+
+    @Select("select count(*) from blog")
+    int countBlog();
+
+    /**
+     * 分页查询博客，但不封装博客内容
+     * @param begin
+     * @param num
+     * @return
+     */
+    @Select("select bId,title,writeTime from blog limit #{begin},#{num}")
+    List<BlogNoContent> listBlogNoContent(@Param("begin") int begin, @Param("num") int num);
 }

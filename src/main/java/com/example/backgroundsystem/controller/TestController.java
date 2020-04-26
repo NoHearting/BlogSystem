@@ -234,4 +234,13 @@ public class TestController {
         return "success";
     }
 
+    @RequestMapping("testPage")
+    public String test(){
+        return "test/testPage";
+    }
+
+    @RequestMapping("testWriteMarkdown")
+    public String testWrite(){
+        return "test/testWriteMarkdown";
+    }
 }
