@@ -1,7 +1,7 @@
 package com.example.backgroundsystem.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.backgroundsystem.domain.Comment;
+import com.example.backgroundsystem.domain.blogsys.Comment;
 import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;

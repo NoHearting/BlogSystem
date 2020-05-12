@@ -1,7 +1,8 @@
 package com.example.backgroundsystem.mapper;
 
-import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.BlogNoContent;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -47,4 +48,11 @@ public interface BlogMapper {
      */
     @Select("select bId,title,writeTime from blog limit #{begin},#{num}")
     List<BlogNoContent> listBlogNoContent(@Param("begin") int begin, @Param("num") int num);
+
+
+    @Insert("insert into blog(title,writeTime,readTimes,content) values(#{title},#{writeTime},#{readTimes},#{content})")
+    void insertBlog(Blog blog);
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.service;
 
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.page.BlogPage;
 
 import java.util.List;
@@ -18,4 +18,7 @@ public interface BlogService {
     BlogPage getBlogsByKeywordAndPage(String keyword, int currentPage, int pageMaxItems);
 
     BlogPage listBlogNoContent(int currentPage,int pageMaxItems);
+
+
+    void insertBlog(Blog blog);
 }

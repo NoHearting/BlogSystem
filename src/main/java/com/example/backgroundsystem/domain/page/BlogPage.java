@@ -1,7 +1,6 @@
 package com.example.backgroundsystem.domain.page;
 
-import com.example.backgroundsystem.domain.BaseBlog;
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.BaseBlog;
 import lombok.*;
 
 import java.util.List;

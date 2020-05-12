@@ -1,7 +1,5 @@
-package com.example.backgroundsystem.domain;
+package com.example.backgroundsystem.domain.blogsys;
 
-import com.example.backgroundsystem.utils.MyDate;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -16,6 +14,12 @@ public class Blog extends BaseBlog{
         super(bId, title, writeTime);
         this.content = content;
         this.readTimes = readTimes;
+    }
+
+    public Blog(Blog blog){
+        super(blog.getbId(),blog.getTitle(),blog.getWriteTime());
+        this.content = blog.getContent();
+        this.readTimes = blog.getReadTimes();
     }
 
     public String getContent() {

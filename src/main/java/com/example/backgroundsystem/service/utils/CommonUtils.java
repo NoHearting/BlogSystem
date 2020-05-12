@@ -1,7 +1,11 @@
 package com.example.backgroundsystem.service.utils;
 
-import com.example.backgroundsystem.domain.BaseBlog;
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.BaseBlog;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.BlogWithCountComment;
+import com.example.backgroundsystem.mapper.CommentMapper;
+import com.example.backgroundsystem.utils.HtmlToPlainText;
+import com.example.backgroundsystem.utils.MarkdownToHtml;
 import com.example.backgroundsystem.utils.MyDate;
 
 import java.util.List;
@@ -32,6 +36,30 @@ public class CommonUtils {
             BaseBlog blog = blogs.get(i);
             // MyDate默认格式化为yy-MM-dd
             blog.setWriteTime(new MyDate(blog.getWriteTime().getTime(),"yyyy-MM-dd HH:mm:ss"));
+        }
+    }
+
+    /**
+     * 将博客内容（markdown格式）转化为纯文本格式
+     * @param blogs
+     */
+    public static void dealBlogContent(List<? extends BaseBlog> blogs){
+        for(int i = 0;i<blogs.size();i++){
+            Blog blog = (Blog)blogs.get(i);
+            blog.setContent(HtmlToPlainText.convert(MarkdownToHtml.convert(blog.getContent())));
+        }
+    }
+
+    /**
+     * 添加博客的评论条数
+     * @param blogs
+     */
+    public static void addBlogCommentCount(List<Blog> blogs, CommentMapper commentMapper){
+        for(int i = 0;i<blogs.size();i++){
+            Blog blog = (Blog)blogs.get(i);
+            BlogWithCountComment blogWithCountComment = new BlogWithCountComment(blog, commentMapper.getTotalCountById(blog.getbId()));
+            blogs.set(i,blogWithCountComment);
+
         }
     }
 }

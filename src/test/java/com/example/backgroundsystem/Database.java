@@ -1,11 +1,13 @@
 package com.example.backgroundsystem;
 
-import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.Link;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.Link;
+import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
 import com.example.backgroundsystem.mapper.BlogMapper;
 import com.example.backgroundsystem.mapper.LinkMapper;
+import com.example.backgroundsystem.mapper.UpdateEventMapper;
 import com.example.backgroundsystem.service.BlogService;
-import net.bytebuddy.asm.Advice;
+import net.minidev.json.writer.UpdaterMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +25,9 @@ public class Database {
 
     @Autowired
     BlogService blogService;
+
+    @Autowired
+    UpdateEventMapper updateEventMapper;
 
     @Test
     public void testSearch(){
@@ -46,4 +51,17 @@ public class Database {
         System.out.println(blogMapper.listBlogNoContent(1,10));
         blogService.listBlogNoContent(1,10);
     }
+
+
+    @Test
+    public void listUpdateEvent(){
+        List<UpdateEvent> updateEvents = updateEventMapper.listUpdateEvent();
+        System.out.println(updateEvents);
+    }
+
+    @Test
+    public void countAll(){
+        System.out.println(updateEventMapper.countAll());
+    }
+
 }

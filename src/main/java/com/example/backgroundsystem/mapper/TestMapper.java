@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.mapper;
 
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.Blog;
 import org.apache.ibatis.annotations.Insert;
 
 public interface TestMapper {

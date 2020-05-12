@@ -1,11 +1,14 @@
 package com.example.backgroundsystem.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
 import com.example.backgroundsystem.domain.page.CommentPage;
+import com.example.backgroundsystem.mapper.UpdateEventMapper;
 import com.example.backgroundsystem.service.BlogService;
 import com.example.backgroundsystem.service.CommentService;
 import com.example.backgroundsystem.service.LinkService;
+import com.example.backgroundsystem.service.UpdateEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +33,9 @@ public class BlogController {
     @Autowired
     private LinkService linkService;
 
+    @Autowired
+    private UpdateEventService updateEventService;
+
     @GetMapping({"/","index","index.html"})
     public String index(Map<String,Object> map){
         List<Blog> allBlog = blogService.getAllBlog(true);
@@ -42,7 +48,11 @@ public class BlogController {
      * @return
      */
     @GetMapping("update")
-    public String update(){
+    public String update(Map<String,Object> map){
+        List<UpdateEvent> updateEvents = updateEventService.listUpdateEvent();
+        map.put("events",updateEvents);
+        System.out.println(updateEvents);
+
         return "Blogs/update";
     }
 
@@ -129,8 +139,16 @@ public class BlogController {
     @GetMapping("detail")
     public String details(Integer id,Integer currentPage, Integer pageMaxItems,Map<String,Object> map){
         map.put("id",(Integer)id);
-        CommentPage comments = commentService.getComments(id, currentPage, pageMaxItems);
+        CommentPage comments = null;
+        if(null==currentPage||null==pageMaxItems||(currentPage==1 && pageMaxItems == 10)){
+            comments = commentService.getComments(id, 1, 10);
+        }
+        else{
+            comments = commentService.getComments(id, currentPage, pageMaxItems);
+        }
+
         map.put("commentPage",comments);
+        map.put("comments",commentService.countBlogComments(id));
         return "Blogs/detail";
     }
 
@@ -181,5 +199,8 @@ public class BlogController {
     public void insertBlog(){
 
     }
+
+
+
 }
 

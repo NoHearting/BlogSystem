@@ -1,6 +1,6 @@
 package com.example.backgroundsystem;
 
-import com.example.backgroundsystem.domain.Blog;
+import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.mapper.TestMapper;
 import com.example.backgroundsystem.utils.MyDate;
 import org.junit.jupiter.api.Test;

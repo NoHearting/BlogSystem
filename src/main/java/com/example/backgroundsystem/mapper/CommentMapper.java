@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.mapper;
 
-import com.example.backgroundsystem.domain.Comment;
+import com.example.backgroundsystem.domain.blogsys.Comment;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -67,6 +67,8 @@ public interface CommentMapper {
      */
     @Select("select * from comment where writePosition = #{id}")
     List<Comment> getCommentsByBlogId(int id);
+
+
 
 
     /**

@@ -50,9 +50,10 @@ server:
   servlet:
     context-path: "/"
 
-mybatis:
-  mapper-locations: classpath:mapping/*.xml
-  #type-aliases-package: com.example.entity
+#mybatis:
+#  mapper-locations: classpath:mapping/BlogSys/*.xml
+##  type-aliases-package: com.example.backgroundsystem.domain.blogsys
+#  config-location: classpath:mapper/mybatis-config.xml
 
 logging:
   level:

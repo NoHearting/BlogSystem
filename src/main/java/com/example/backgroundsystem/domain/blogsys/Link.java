@@ -1,4 +1,4 @@
-package com.example.backgroundsystem.domain;
+package com.example.backgroundsystem.domain.blogsys;
 
 import lombok.*;
 

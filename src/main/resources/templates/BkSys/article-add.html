@@ -189,7 +189,7 @@
                             <span class='x-red'>*</span>文章简介
                         </label>
                         <div class="layui-input-block">
-                            <textarea placeholder="请输入内容" name="abstract" class="layui-textarea">{$art.abstract}</textarea>
+                            <textarea placeholder="请输入内容" name="abstract" class="layui-textarea">技术博客</textarea>
                         </div>
                     </div>
 
@@ -208,11 +208,9 @@
                         </label>
                         <div>
                             <div id="test-editor">
-                                <textarea id="blog-html" style="display:none;" name="content">### 关于 Editor.md
-                                        **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
-                                </textarea>
+                                <textarea id="blog-html" style="display:none;" name="content"></textarea>
 
-                                <textarea  class="editormd-html-textarea" ></textarea>
+                                <textarea  class="editormd-html-textarea" name="transferContent"></textarea>
                             </div>
                         </div>
                     </div>
@@ -235,12 +233,12 @@
     <script th:src="@{/BackgroundSystem/lib/layui/layui.js}" charset="utf-8"></script>
     <script th:src="@{/BackgroundSystem/js/x-layui.js}" charset="utf-8"></script>
     <script type="text/javascript">
-    //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    UE.getEditor('content',{initialFrameWidth:600,initialFrameHeight:400,});
-</script>
+        //实例化编辑器
+        //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+        UE.getEditor('content',{initialFrameWidth:600,initialFrameHeight:400,});
+    </script>
     <script>
-    layui.use(['element','layer','form'], function(){
+        layui.use(['element','layer','form'], function(){
         $ = layui.jquery;//jquery
         lement = layui.element();//面包导航
         layer = layui.layer;//弹出层
@@ -248,14 +246,7 @@
 
 
 
-        //图片上传接口
-        /*layui.upload({
-          url: './upload.json' //上传接口
-          ,success: function(res){ //上传成功后的回调
-              console.log(res);
-            $('#LAY_demo_upload').attr('src',res.url);
-          }
-        });*/
+
 
 
         //监听提交
@@ -272,13 +263,11 @@
             if(article_category_id==""){
                 layer.msg('文章类型不能为空',{icon:5,time:2000});return false;
             }
-            /*if(content){
-                layer.msg("文章内容不能为空！",{icon:5,time:2000});return false;
-          }*/
+
             var data = data.field;
             $.ajax({
                 type:"post",
-                url:"",
+                url:"/admin/insertBlog",
                 data:data,
                 dataType:"json",
                 success:function(data){
@@ -300,7 +289,7 @@
         });
 
     })
-</script>
+    </script>
 <!--栏目缩略图上传-->
     <script>
     function upload(obj,id){
@@ -333,7 +322,7 @@
     <script>
         var editor = editormd("test-editor", {
             width  : "100%",
-            height : 600,
+            height : "500px",
             path   : "/editermd/lib/",
             editorTheme: "pastel-on-dark",//编辑主题
             theme: "dark",//工具栏主题

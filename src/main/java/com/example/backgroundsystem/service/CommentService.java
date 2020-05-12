@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.service;
 
-import com.example.backgroundsystem.domain.Comment;
+import com.example.backgroundsystem.domain.blogsys.Comment;
 import com.example.backgroundsystem.domain.page.CommentPage;
 
 public interface CommentService {
@@ -9,4 +9,6 @@ public interface CommentService {
 
 
     void insertComment(Comment comment);
+
+    int countBlogComments(int id);
 }

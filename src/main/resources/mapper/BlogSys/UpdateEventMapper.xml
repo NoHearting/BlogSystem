@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backgroundsystem.mapper.UpdateEventMapper">
+    <select id="listUpdateEvent" resultType="java.util.List" resultMap="updateEvent">
+        select * from update_event
+    </select>
+    <resultMap id="updateEvent" type="com.example.backgroundsystem.domain.blogsys.UpdateEvent">
+        <id property="uId" column="u_id"></id>
+        <result property="content" column="content"></result>
+        <result property="execTime" column="exec_time"></result>
+        <result property="flag" column="flag"></result>
+    </resultMap>
+
+    <select id="countAll" resultType="int">
+        select count(*) from update_event
+    </select>
+</mapper>

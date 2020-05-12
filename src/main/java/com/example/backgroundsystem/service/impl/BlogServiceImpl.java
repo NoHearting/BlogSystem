@@ -1,9 +1,10 @@
 package com.example.backgroundsystem.service.impl;
 
-import com.example.backgroundsystem.domain.Blog;
-import com.example.backgroundsystem.domain.BlogNoContent;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
 import com.example.backgroundsystem.domain.page.BlogPage;
 import com.example.backgroundsystem.mapper.BlogMapper;
+import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.BlogService;
 import com.example.backgroundsystem.service.utils.CommonUtils;
 import com.example.backgroundsystem.service.utils.PageUtils;
@@ -11,6 +12,7 @@ import com.example.backgroundsystem.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +20,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     BlogMapper blogMapper;
+
+    @Autowired
+    CommentMapper commentMapper;
 
     /**
      * 获取所有博客处理之后并返回,可以选择是否将博客内容截取（截断）
@@ -30,14 +35,18 @@ public class BlogServiceImpl implements BlogService {
         try{
             List<Blog> allBlogs = blogMapper.getAllBlogs();
 
+
+            if(isCut) {
+                dealBlogData(allBlogs, 200);
+            }
             //转换日期变量
             CommonUtils.dealDate(allBlogs);
-            if(!isCut){
-                return allBlogs;
-            }else{
-                dealBlogData(allBlogs,100);
-                return allBlogs;
-            }
+            //转换内容格式
+            CommonUtils.dealBlogContent(allBlogs);
+            //添加博客的评论信息
+            CommonUtils.addBlogCommentCount(allBlogs,commentMapper);
+            return allBlogs;
+
         }catch (Exception e){
             LoggerUtils.warn(e.getMessage());
             return null;
@@ -105,6 +114,12 @@ public class BlogServiceImpl implements BlogService {
         CommonUtils.dealDateExact(blogs);   // 格式化日期为yyyy-MM-dd HH:mm:ss
         LoggerUtils.debug(blogs.toString());
         return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
+    }
+
+    @Override
+    public void insertBlog(Blog blog) {
+        blog.setWriteTime(new Date());
+        blogMapper.insertBlog(blog);
     }
 
 

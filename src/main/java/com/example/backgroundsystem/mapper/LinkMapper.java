@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.mapper;
 
-import com.example.backgroundsystem.domain.Link;
+import com.example.backgroundsystem.domain.blogsys.Link;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 

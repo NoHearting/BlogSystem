@@ -1,6 +1,6 @@
 package com.example.backgroundsystem.service.impl;
 
-import com.example.backgroundsystem.domain.Comment;
+import com.example.backgroundsystem.domain.blogsys.Comment;
 import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.CommentService;
@@ -54,7 +54,10 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.insertComment(comment);
     }
 
-
+    @Override
+    public int countBlogComments(int id) {
+        return commentMapper.getTotalCountById(id);
+    }
 
 
 }
