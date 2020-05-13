@@ -59,9 +59,5 @@ public class Database {
         System.out.println(updateEvents);
     }
 
-    @Test
-    public void countAll(){
-        System.out.println(updateEventMapper.countAll());
-    }
 
 }

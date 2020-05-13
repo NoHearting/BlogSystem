@@ -61,7 +61,8 @@ public class BlogController {
      * @return
      */
     @GetMapping("archives")
-    public String archives(){
+    public String archives(Map<String,Object> map){
+        map.put("events",updateEventService.listUpdateEvent());
         return "Blogs/archives";
     }
 

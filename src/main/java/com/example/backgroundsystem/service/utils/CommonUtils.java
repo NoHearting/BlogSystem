@@ -3,6 +3,7 @@ package com.example.backgroundsystem.service.utils;
 import com.example.backgroundsystem.domain.blogsys.BaseBlog;
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogWithCountComment;
+import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.utils.HtmlToPlainText;
 import com.example.backgroundsystem.utils.MarkdownToHtml;
@@ -23,6 +24,14 @@ public class CommonUtils {
             BaseBlog blog = blogs.get(i);
             // MyDate默认格式化为yy-MM-dd
             blog.setWriteTime(new MyDate(blog.getWriteTime().getTime()));
+        }
+    }
+
+    public static void dealEventDate(List<UpdateEvent> events){
+        for(int i = 0;i<events.size();i++){
+            UpdateEvent updateEvent = events.get(i);
+            // MyDate默认格式化为yy-MM-dd
+            updateEvent.setExecTime(new MyDate(updateEvent.getExecTime().getTime()));
         }
     }
 
@@ -59,7 +68,8 @@ public class CommonUtils {
             Blog blog = (Blog)blogs.get(i);
             BlogWithCountComment blogWithCountComment = new BlogWithCountComment(blog, commentMapper.getTotalCountById(blog.getbId()));
             blogs.set(i,blogWithCountComment);
-
         }
     }
+
+
 }
