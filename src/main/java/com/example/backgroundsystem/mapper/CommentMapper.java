@@ -13,11 +13,13 @@ public interface CommentMapper {
 
 
     /**
-     * 获取评论条目数量
+     * 获取【留言】评论条目数量
      * @return
      */
-    @Select("select count(*) from comment")
+    @Select("select count(*) from comment where writePosition = -1")
     int getTotalCount();
+
+
 
     /**
      * 获取某个博客下的评论的条数
@@ -97,4 +99,13 @@ public interface CommentMapper {
      */
     @Select("insert into comment(userName,userEmail,userWebSite,userHeader,content,writeTime,writePosition,reply) values(#{userName},#{userEmail},#{userWebSite},#{userHeader},#{content},#{writeTime},#{writePosition},#{reply})")
     void insertComment(Comment comment);
+
+
+    /**
+     * 获取一条评论的昵称（写评论的人的昵称）
+     * @param reply
+     * @return
+     */
+    @Select("select userName from comment where cId = #{reply}")
+    String getNicknameById(int reply);
 }

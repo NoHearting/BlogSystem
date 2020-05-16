@@ -47,14 +47,22 @@ public class CommentController {
     @RequestMapping("insertComment")
     public String insertComment(Comment comment){
         System.out.println(comment);
+
+
         commentService.insertComment(comment);
 
         // 获取评论所在的地方【博客】或者【留言】
         int writePosition = comment.getWritePosition();
+
+        //返回确认信息
         Map<String,Object> json = new HashMap<>();
         json.put("status","success");
         json.put("writePosition",writePosition);
         String s = JSON.toJSONString(json);
         return s;
     }
+
+
+
+
 }

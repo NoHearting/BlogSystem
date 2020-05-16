@@ -4,6 +4,7 @@ import com.example.backgroundsystem.domain.blogsys.Comment;
 import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.CommentService;
+import com.example.backgroundsystem.service.utils.CommonUtils;
 import com.example.backgroundsystem.service.utils.PageUtils;
 import com.example.backgroundsystem.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class CommentServiceImpl implements CommentService {
     public void insertComment(Comment comment) {
         comment.setWriteTime(new Date());  // 设置comment的日期
         LoggerUtils.info(comment.toString());
+
+        //插入前处理评论，这则评论有可能是回复某个评论
+        CommonUtils.dealCommentIsReply(comment,commentMapper);
+
         commentMapper.insertComment(comment);
     }
 

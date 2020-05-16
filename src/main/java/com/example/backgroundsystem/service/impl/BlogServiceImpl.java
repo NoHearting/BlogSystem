@@ -150,5 +150,28 @@ public class BlogServiceImpl implements BlogService {
         blogMapper.insertBlog(blog);
     }
 
+    @Override
+    public Blog getPreBlog(int id) {
+        Blog preBlog = blogMapper.getPreBlog(id);
+        if(null==preBlog){
+            preBlog = blogMapper.getCurrentBlog(id);
+        }
+        return preBlog;
+    }
+
+    @Override
+    public Blog getAfterBlog(int id) {
+        Blog afterBlog = blogMapper.getAfterBlog(id);
+        if(null==afterBlog){
+            afterBlog = blogMapper.getCurrentBlog(id);
+        }
+        return afterBlog;
+    }
+
+    @Override
+    public Blog getCurrentBlog(Integer id) {
+        return blogMapper.getCurrentBlog(id);
+    }
+
 
 }

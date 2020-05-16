@@ -183,12 +183,12 @@
                                 <div class="commentinfo">
                                     <section class="commeta">
                                         <div class="shang">
-                                            <h4 class="author"><a href="" target="_blank"><img th:src="${comment.userHeader}" class="gravatarsmall" alt="小布丁">[[${comment.userName}]]</a></h4>
+                                            <h4 class="author"><a href="" target="_blank"><img th:src="${comment.userHeader}" class="gravatarsmall" th:alt="${comment.userName}">[[${comment.userName}]]</a></h4>
                                         </div>
                                     </section>
                                 </div>
                                 <div class="body">
-                                    <p>[[${comment.content}]]</p>
+                                    <p th:class="${comment.reply ne -1}?'reply-comment':''">[[${comment.content}]]</p>
                                 </div>
                                 <div class="xia info">
                                     <span><time datetime="2018-03-09" th:datetime="${comment.writeTime}">2018年3月9日</time></span>

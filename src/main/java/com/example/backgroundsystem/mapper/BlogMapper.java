@@ -56,4 +56,29 @@ public interface BlogMapper {
     @Select("select bId,title,writeTime,readTimes from blog order by writeTime desc")
     List<Blog> listAllBlog();
 
+
+    /**
+     * 查询当前id的blog的前一篇blog
+     * @param id
+     * @return
+     */
+    @Select("select bId,title from blog where bId < #{id} order by bId desc limit 0,1")
+    Blog getPreBlog(int id);
+
+    /**
+     * 查询当前id的blog的后一篇blog
+     * @param id
+     * @return
+     */
+    @Select("select bId,title from blog where bId > #{id} order by bId limit 0,1")
+    Blog getAfterBlog(int id);
+
+    /**
+     * 获取当前id的blog，避免无法获取前一篇博客和后一篇博客而出现异常
+     * 如果当前博客前面面没有博客或者后面也没有博客，就返回当前博客
+     * @param id
+     * @return
+     */
+    @Select("select bId,title from blog where bId = #{id}")
+    Blog getCurrentBlog(int id);
 }

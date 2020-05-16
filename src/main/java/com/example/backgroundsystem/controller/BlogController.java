@@ -152,6 +152,9 @@ public class BlogController {
 
         map.put("commentPage",comments);
         map.put("comments",commentService.countBlogComments(id));
+        map.put("preBlog",blogService.getPreBlog(id));
+        map.put("afterBlog",blogService.getAfterBlog(id));
+        map.put("currentBlog",blogService.getCurrentBlog(id));
         return "Blogs/detail";
     }
 

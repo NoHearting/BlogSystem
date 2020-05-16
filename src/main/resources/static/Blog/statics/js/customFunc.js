@@ -77,6 +77,7 @@ function updateNavTheATags(pos,currentPage,totalPages) {
 
 
     aTags += '<a  class="prev page-numbers" href="javascript:updateCommentsWithATag('+pos+','+(begin-1)+',10)" >< </a>'
+    currPage = currPage < 1  ? 1 : currPage;  //页码小于1的情况将页码设置为1
     for(var i = begin;i<=end;i++){
         if(i == currPage){
             aTags += '<span aria-current="page" class="page-numbers current">'+i+'</span>';
@@ -181,8 +182,14 @@ function updateCommentsWithATag(pos,currentPage,pageMaxItems) {
                     '                                        </div>\n' +
                     '                                    </section>\n' +
                     '                                </div>\n' +
-                    '                                <div class="body">\n' +
-                    '                                    <p>'+commentPage.comments[i].content+'</p>\n' +
+                    '                                <div class="body">\n';
+                log("customFunc.js","updateCommentsWithATag",commentPage.comments[i].reply);
+                if(commentPage.comments[i].reply > -1){
+                    li += '                                    <p  class="reply-comment">'+commentPage.comments[i].content+'</p>\n';
+                }else{
+                    li += '                                    <p>'+commentPage.comments[i].content+'</p>\n';
+                }
+                li +=
                     '                                </div>\n' +
                     '                                <div class="xia info">\n' +
                     '                                    <span><time datetime="'+commentPage.comments[i].writeTime+'">2018年3月9日</time></span>\n' +

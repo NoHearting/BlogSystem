@@ -9,10 +9,10 @@ public class PageUtils {
      */
     public static int calBeginItemIndex(int pageMaxItems,int currentPage){
         int begin = 0;
-        if(currentPage<1){
+        if(currentPage < 1){
             return begin;
         }
-        begin = pageMaxItems*(currentPage-1);
+        begin = pageMaxItems * (currentPage-1);
         return begin;
     }
 
@@ -26,10 +26,10 @@ public class PageUtils {
     public static int calTotalPages(int totalItems,int pageMaxItems){
         if(totalItems < pageMaxItems){
             return 1;
-        }else if(totalItems%pageMaxItems==0){
+        }else if(totalItems % pageMaxItems==0){
             return totalItems/pageMaxItems;
         }else{
-            return totalItems/pageMaxItems+1;
+            return totalItems / pageMaxItems+1;
         }
     }
 }

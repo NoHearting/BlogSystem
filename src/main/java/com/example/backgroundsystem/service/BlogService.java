@@ -24,4 +24,10 @@ public interface BlogService {
     Map<String, List<Blog>> calBlogByDate();
 
     void insertBlog(Blog blog);
+
+    Blog getPreBlog(int id);
+
+    Blog getAfterBlog(int id);
+
+    Blog getCurrentBlog(Integer id);
 }

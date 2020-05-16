@@ -1,9 +1,6 @@
 package com.example.backgroundsystem.service.utils;
 
-import com.example.backgroundsystem.domain.blogsys.BaseBlog;
-import com.example.backgroundsystem.domain.blogsys.Blog;
-import com.example.backgroundsystem.domain.blogsys.BlogWithCountComment;
-import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
+import com.example.backgroundsystem.domain.blogsys.*;
 import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.utils.DateUtils;
 import com.example.backgroundsystem.utils.HtmlToPlainText;
@@ -86,6 +83,23 @@ public class CommonUtils {
             DateUtils.setDate(blog.getWriteTime());
             blog.setContent(DateUtils.getMonth()+"-"+DateUtils.getDay());
         }
+    }
 
+    /**
+     * 判断此条评论是否为一条回复评论
+     * 若是，则对回复内容进行一次加工，加上所回复的评论的信息
+     *      加工信息为：“回复+{评论人的昵称}:”,:作为分隔符
+     * 若不是，则什么都不做
+     * @param comment
+     */
+    public static void dealCommentIsReply(Comment comment,CommentMapper commentMapper){
+        if(null!=comment){
+            if(comment.getReply() > -1){
+                String info = "回复 "+commentMapper.getNicknameById(comment.getReply())+": ";
+                comment.setContent(info+comment.getContent());
+            }else{
+                return;
+            }
+        }
     }
 }
