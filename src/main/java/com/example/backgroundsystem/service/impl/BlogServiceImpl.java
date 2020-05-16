@@ -8,12 +8,12 @@ import com.example.backgroundsystem.mapper.CommentMapper;
 import com.example.backgroundsystem.service.BlogService;
 import com.example.backgroundsystem.service.utils.CommonUtils;
 import com.example.backgroundsystem.service.utils.PageUtils;
+import com.example.backgroundsystem.utils.DateUtils;
 import com.example.backgroundsystem.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -115,6 +115,34 @@ public class BlogServiceImpl implements BlogService {
         LoggerUtils.debug(blogs.toString());
         return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
     }
+
+    @Override
+    public Map<String, List<Blog>> calBlogByDate() {
+        List<Blog> blogs = blogMapper.listAllBlog();
+        if(blogs==null){
+            System.out.println("null");
+        }
+        CommonUtils.convertDateToContent(blogs);   //日期转化
+        Map<String,List<Blog>> result = new HashMap<>();
+        for(int i = 0;i<blogs.size();i++){
+            Blog blog = blogs.get(i);
+            //利用Calendar对象回去具体年月日
+            DateUtils.setDate(blog.getWriteTime());
+            String date = DateUtils.getYear()+"-"+(DateUtils.getMonth()<10 ?
+                    ("0"+DateUtils.getMonth()):DateUtils.getMonth());
+            if(result.containsKey(date)){
+                List<Blog> listBlog = result.get(date);
+                listBlog.add(blog);
+            }else{
+                List<Blog> list = new ArrayList<>();
+                list.add(blog);
+                result.put(date,list);
+            }
+        }
+        System.out.println(result);
+        return result;
+    }
+
 
     @Override
     public void insertBlog(Blog blog) {

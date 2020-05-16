@@ -1,9 +1,11 @@
 package com.example.backgroundsystem.service;
 
 import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
 import com.example.backgroundsystem.domain.page.BlogPage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BlogService {
 
@@ -19,6 +21,7 @@ public interface BlogService {
 
     BlogPage listBlogNoContent(int currentPage,int pageMaxItems);
 
+    Map<String, List<Blog>> calBlogByDate();
 
     void insertBlog(Blog blog);
 }

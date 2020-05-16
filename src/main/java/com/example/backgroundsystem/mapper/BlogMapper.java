@@ -53,6 +53,7 @@ public interface BlogMapper {
     @Insert("insert into blog(title,writeTime,readTimes,content) values(#{title},#{writeTime},#{readTimes},#{content})")
     void insertBlog(Blog blog);
 
-
+    @Select("select bId,title,writeTime,readTimes from blog order by writeTime desc")
+    List<Blog> listAllBlog();
 
 }

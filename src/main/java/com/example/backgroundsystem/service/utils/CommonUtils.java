@@ -5,10 +5,12 @@ import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogWithCountComment;
 import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
 import com.example.backgroundsystem.mapper.CommentMapper;
+import com.example.backgroundsystem.utils.DateUtils;
 import com.example.backgroundsystem.utils.HtmlToPlainText;
 import com.example.backgroundsystem.utils.MarkdownToHtml;
 import com.example.backgroundsystem.utils.MyDate;
 
+import java.util.Date;
 import java.util.List;
 
 public class CommonUtils {
@@ -72,4 +74,18 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 作用与归档，由于页面并不需要显示内容，但需要显示日期的特殊形式，
+     * 因为日期的形式只需要显示为字符串，所以将日期转化后写入内容中
+     *
+     * @param blogs
+     */
+    public static void convertDateToContent(List<Blog> blogs){
+        for(int i = 0;i<blogs.size();i++){
+            Blog blog = blogs.get(i);
+            DateUtils.setDate(blog.getWriteTime());
+            blog.setContent(DateUtils.getMonth()+"-"+DateUtils.getDay());
+        }
+
+    }
 }

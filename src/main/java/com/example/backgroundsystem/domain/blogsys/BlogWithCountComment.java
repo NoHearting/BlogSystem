@@ -11,7 +11,7 @@ public class BlogWithCountComment extends Blog {
 
     @Getter
     @Setter
-    private int countComments;
+    private int countComments;   //评论数
 
     public BlogWithCountComment(int bId, String title, String content, Date writeTime, int readTimes,int countComments){
         super(bId, title, content, writeTime, readTimes);

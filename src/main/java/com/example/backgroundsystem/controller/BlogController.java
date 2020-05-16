@@ -2,6 +2,7 @@ package com.example.backgroundsystem.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
 import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
 import com.example.backgroundsystem.domain.page.CommentPage;
 import com.example.backgroundsystem.mapper.UpdateEventMapper;
@@ -62,7 +63,8 @@ public class BlogController {
      */
     @GetMapping("archives")
     public String archives(Map<String,Object> map){
-        map.put("events",updateEventService.listUpdateEvent());
+        Map<String, List<Blog>> blogs = blogService.calBlogByDate();
+        map.put("blogs",blogs);
         return "Blogs/archives";
     }
 
@@ -193,13 +195,6 @@ public class BlogController {
     }
 
 
-    /**
-     * 后台添加博客
-     */
-    @RequestMapping("/insertBlog")
-    public void insertBlog(){
-
-    }
 
 
 
