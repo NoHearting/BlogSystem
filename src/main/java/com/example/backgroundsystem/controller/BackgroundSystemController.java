@@ -2,12 +2,16 @@ package com.example.backgroundsystem.controller;
 
 
 import com.example.backgroundsystem.mapper.BlogMapper;
+import com.example.backgroundsystem.service.BkSysService;
 import com.example.backgroundsystem.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -21,12 +25,23 @@ public class BackgroundSystemController {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private BkSysService bkSysService;
+
     /**
      * 首页
      * @return
      */
-    @GetMapping({"/","index.html"})
-    public String index(){
+    @RequestMapping({"/","index.html","index"})
+    public String index(String username,String password,HttpServletRequest request,Map<String,Object>map){
+        if(bkSysService.login(username,password)){
+            request.getSession().setAttribute("user",username);
+            map.put("user",username);
+            map.remove("error");
+        }else{
+            map.put("error","账号或者密码错误");
+            return "BkSys/login";
+        }
         return "BkSys/index";
     }
 
@@ -286,6 +301,23 @@ public class BackgroundSystemController {
     @GetMapping("sysshield")
     public String sysShield(){
         return "BkSys/sys-shield";
+    }
+
+
+    /**
+     * 登录
+     * @return
+     */
+    @RequestMapping("/login")
+    public String login(){
+
+        return "BkSys/login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:/admin/login";   //注销成功
     }
 
 }

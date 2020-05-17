@@ -49,12 +49,12 @@
           </a>
         </li>
         <li class="layui-nav-item"><img th:src="@{/BackgroundSystem/images/logo.png}" src="@{/BackgroundSystem/images/logo.png}" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
-        <li class="layui-nav-item"> <a href="javascript:;">admin</a>
+        <li class="layui-nav-item"> <a href="javascript:;" th:text="${user}">admin</a>
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
-            <dd><a href="javascript:;" th:onclick="member_show('张三','/admin/membershow','10001','360','400')">个人信息</a></dd>
+            <dd><a href="javascript:;" th:onclick="member_show('[[${user}]]','/admin/membershow','10001','360','400')">个人信息</a></dd>
             <dd><a href="">切换帐号</a></dd>
-            <dd><a href="javascript:;" onclick="logout()">退出</a></dd>
+            <dd><a th:href="@{/admin/logout}">退出</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item x-index"><a href="#">前台首页</a></li>
@@ -69,7 +69,7 @@
         <img th:src="@{/BackgroundSystem/images/logo.png}" src="@{/BackgroundSystem/images/logo.png" class="userAvatar" style="display: block;width: 100%;height: 100%;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;border: 4px solid #44576b;box-sizing: border-box;">
       </a>
       <p style=" display: block;width: 100%;height: 25px;color: #ffffff;text-align: center;font-size: 12px;white-space: nowrap;line-height: 25px;overflow: hidden;">
-        你好！<span class="userName">admin</span>, 欢迎回来
+        你好！<span class="userName" th:text="${user}">admin</span>, 欢迎回来
       </p>
     </div>
     <div class="layui-side-scroll">

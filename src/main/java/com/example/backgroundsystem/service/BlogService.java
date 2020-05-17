@@ -30,4 +30,5 @@ public interface BlogService {
     Blog getAfterBlog(int id);
 
     Blog getCurrentBlog(Integer id);
+
 }

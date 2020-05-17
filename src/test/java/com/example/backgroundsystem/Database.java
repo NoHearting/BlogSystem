@@ -3,6 +3,7 @@ package com.example.backgroundsystem;
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.Link;
 import com.example.backgroundsystem.domain.blogsys.UpdateEvent;
+import com.example.backgroundsystem.mapper.BkSysMapper;
 import com.example.backgroundsystem.mapper.BlogMapper;
 import com.example.backgroundsystem.mapper.LinkMapper;
 import com.example.backgroundsystem.mapper.UpdateEventMapper;
@@ -28,6 +29,9 @@ public class Database {
 
     @Autowired
     UpdateEventMapper updateEventMapper;
+
+    @Autowired
+    BkSysMapper bkSysMapper;
 
     @Test
     public void testSearch(){
@@ -60,4 +64,8 @@ public class Database {
     }
 
 
+    @Test
+    public void login(){
+        System.out.println(bkSysMapper.login("root","1"));
+    }
 }
