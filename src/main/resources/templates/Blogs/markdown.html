@@ -42,6 +42,7 @@
     <script th:src="@{/editermd/lib/flowchart.min.js}"></script>
     <script th:src="@{/editermd/lib/jquery.flowchart.min.js}"></script>
     <script th:src="@{/editermd/editormd.js}"></script>
+    <script th:src="@{/Blog/statics/js/customFunc.js}"></script>
 
     <script>
 
@@ -64,8 +65,12 @@
                         flowChart       : true,  // 默认不解析
                         sequenceDiagram : true  // 默认不解析
                     });
-            window.parent.setDivHeight(findMaxWindowHeight(3));
+            setTimeout(function () {
+                window.parent.setDivHeight(findMaxWindowHeight(3));
+            },100);
+
         });
+
         /**
          * 循环多次获取页面高度，取最高的一次
          * @param times
@@ -82,7 +87,7 @@
                 maxHeight = maxHeight>temp?maxHeight:temp;
             }
             return maxHeight;
-        }
+        };
 
 
     </script>

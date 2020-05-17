@@ -274,14 +274,20 @@ function addActionForTheForm() {
 
                 log("customFunc.js",164,(data.writePosition > 0));
                 if(data.status == "success"){
+                    // successCommit();  //显示提示信息  未完成
+                    clearFormData();  //成功提交之后清除表单中的数据
                     if(data.writePosition >= 0) {
                         updateCommentsWithATag(data.writePosition, 1, 10);
                     }else{
                         updateCommentsWithATag(-1, 1, 10);
                     }
+                }else{
+                    // failedCommit("提交失败，未知错误");  //未完成
                 }
 
 
+            }else{
+                // failedCommit("提交失败，未知错误");   //未完成
             }
         });
     });
@@ -332,6 +338,12 @@ function checkData() {
 
     return true;
 }
+
+/**
+ * 判断邮箱格式是否正确
+ * @param str_email
+ * @returns {boolean}
+ */
 function isEmail(str_email) {
     var reg = /^([a-zA-Z0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
     var re = new RegExp(reg);
@@ -341,6 +353,12 @@ function isEmail(str_email) {
         return false;
     }
 }
+
+/**
+ * 判断网址的格式是否正确
+ * @param str_url
+ * @returns {boolean}
+ */
 function isURL(str_url){
     var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
         + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
@@ -362,6 +380,30 @@ function isURL(str_url){
 }
 
 /**
+ * 添加评论成功之后清除表单中的数据
+ */
+function clearFormData() {
+    $("#author").val("");
+    $("#email").val("");
+    $("#url").val("");
+    $("#comment").val("");
+}
+
+/**
+ * 成功提交评论信息
+ */
+function successCommit() {
+    $("#msg-box").html("评论提交成功").show(300).delay(3000).hide(300);
+}
+
+/**
+ * 提交评论失败
+ */
+function failedCommit(errorInfo) {
+    $("#msg-box").html(errorInfo).show(300).delay(3000).hide(300);
+}
+
+/**
  * 给搜索页面的列表添加一个响应事件，使其能够正确的转到相应的页面显示博客
  * 此函数在搜索页面被调用
  */
@@ -375,3 +417,20 @@ function addIntoArticleOnclickEvent() {
         });
     })
 }
+
+
+
+
+function setIframeHeight(iframe) {
+    if (iframe) {
+        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        if (iframeWin.document.body) {
+            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+        }
+    }
+    console.log(iframe.height);
+};
+
+
+
+

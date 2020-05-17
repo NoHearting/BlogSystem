@@ -71,10 +71,11 @@
             updateNavTheATags([[${id}]],[[${commentPage.currentPage}]],[[${commentPage.totalPages}]]);
             // addClickToReplyATags();
             addActionForTheForm();
+            // setIframeHeight();
         });
         /**
          * 动态设置markdown容器的高度
-         *  由iframe页面的函数调用
+         *  由iframe页面的函数调用，在markdown.html页面
          */
         function setDivHeight(height){
             $("#test").height(height);
