@@ -31,35 +31,48 @@ public class UploadController {
             map.put("url","null");
             return JSON.toJSONString(map);
         }
-        // 拿到文件名
-        String filename = upload.getOriginalFilename();
+//        // 拿到文件名
+//        String filename = upload.getOriginalFilename();
+//
+//        // 存放上传图片的文件夹
+//        File fileDir = UploadUtils.getImgDirFile();
+//        // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
+//        System.out.println(fileDir.getAbsolutePath());
 
-        // 存放上传图片的文件夹
-        File fileDir = UploadUtils.getImgDirFile();
-        // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
-        System.out.println(fileDir.getAbsolutePath());
 
 
         try {
             // 构建真实的文件路径
-            filename = UUID.randomUUID().toString().replace("-", "")+filename;
-            File newFile = new File(fileDir.getAbsolutePath() + File.separator + filename);
+            String randomStr = UUID.randomUUID().toString().replace("-", "");
+            String path = request.getServletContext().getRealPath("/")+"/upload/pic/"+randomStr+upload.getOriginalFilename();
+            File newFile = new File(path);
             LoggerUtils.debug(newFile.getAbsolutePath());
 
-            // 上传图片到 -》 “绝对路径”
-            upload.transferTo(newFile);
 
-            String contextPath = request.getContextPath();
-            if(contextPath.length()<1){
-                contextPath += File.separator;
+            if(!(newFile.getParentFile().exists())){
+                newFile.getParentFile().mkdirs();
+            }
+            try {
+                upload.transferTo(newFile); //转存文件
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            String url = contextPath+UploadUtils.IMG_PATH_PREFIX.replace("/","\\")+File.separator+filename;
+
+//            // 上传图片到 -》 “绝对路径”
+//            upload.transferTo(newFile);
+//
+//            String contextPath = request.getContextPath();
+//            if(contextPath.length()<1){
+//                contextPath += File.separator;
+//            }
+
+            String url = "/upload/pic/"+randomStr+upload.getOriginalFilename();
             map.put("success",1);
             map.put("message","上传成功");
             map.put("url",url);
             return JSON.toJSONString(map);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             map.put("success",0);
             map.put("message","上传失败");

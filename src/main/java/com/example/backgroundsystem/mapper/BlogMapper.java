@@ -5,6 +5,7 @@ import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -81,4 +82,12 @@ public interface BlogMapper {
      */
     @Select("select bId,title from blog where bId = #{id}")
     Blog getCurrentBlog(int id);
+
+
+    /**
+     * 每获取一次博客，就将博客的阅读次数加一
+     * @param id
+     */
+    @Update("update blog set readTimes = readTimes + 1 where bId = #{id}")
+    void addBlogReadTimes(int id);
 }

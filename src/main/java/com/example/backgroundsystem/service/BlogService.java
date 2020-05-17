@@ -31,4 +31,5 @@ public interface BlogService {
 
     Blog getCurrentBlog(Integer id);
 
+    void addBlogReadTimes(int id);
 }

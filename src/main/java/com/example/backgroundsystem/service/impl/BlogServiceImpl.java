@@ -173,5 +173,8 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.getCurrentBlog(id);
     }
 
-
+    @Override
+    public void addBlogReadTimes(int id) {
+        blogMapper.addBlogReadTimes(id);
+    }
 }

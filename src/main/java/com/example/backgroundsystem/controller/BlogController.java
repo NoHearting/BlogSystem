@@ -150,11 +150,15 @@ public class BlogController {
             comments = commentService.getComments(id, currentPage, pageMaxItems);
         }
 
+
         map.put("commentPage",comments);
         map.put("comments",commentService.countBlogComments(id));
         map.put("preBlog",blogService.getPreBlog(id));
         map.put("afterBlog",blogService.getAfterBlog(id));
         map.put("currentBlog",blogService.getCurrentBlog(id));
+
+        //增加当前文章的阅读次数
+        blogService.addBlogReadTimes(id);
         return "Blogs/detail";
     }
 
@@ -196,6 +200,8 @@ public class BlogController {
     public Blog getBlogById(Integer id){
         return blogService.getBlogById(id);
     }
+
+
 
 
 
