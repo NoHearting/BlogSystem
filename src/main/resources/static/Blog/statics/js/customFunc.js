@@ -1,3 +1,5 @@
+var file_name = 'customFunc.js';
+
 function getBlogComment(id,currentPage,pageMaxItems) {
 
 }
@@ -257,6 +259,13 @@ function updateBlogsWithATag(s,currentPage){
  */
 function addActionForTheForm() {
     $("#commentForm").submit(function (data) {
+
+
+        //进行表单数据合法性的验证
+        if(!checkData()){
+            log(file_name,"addActionForTheForm","Refuse Commit!");
+            return;
+        }
         $.post("/insertComment",$(this).serialize(data),function (info) {
             log("customFunc.js",160,info);
             var data = JSON.parse(info);
@@ -276,6 +285,80 @@ function addActionForTheForm() {
             }
         });
     });
+}
+
+/**
+ * 检查提交的数据的合法性
+ * @param data
+ */
+function checkData() {
+
+    //检车昵称是否填写
+    var nickname = $("#author").val();
+    if(null == nickname || '' == nickname){
+        $("#author").css("border","1px solid red");
+        return false;
+    }else{
+        $("#author").css("border","1px solid #0ed145");
+    }
+
+
+    //验证邮箱合法性
+    var email = $("#email").val();
+    if(!isEmail(email)){  //不合法设置输入框边框为red
+        $("#email").css("border","1px solid red");
+        return false;
+    }else{
+        $("#email").css("border","1px solid #0ed145")
+    }
+
+    //验证网址是否合法
+    var url = $("#url").val();
+    if(!isURL(url)){
+        $("#url").css("border","1px solid red");
+        return false;
+    }else{
+        $("#url").css("border","1px solid #0ed145")
+    }
+
+    //检测评论是否有内容
+    var comment = $("#comment").val();
+    if(null == comment || "" == comment){
+        $("#comment").css("border","1px solid red");
+        return false;
+    }else{
+        $("#comment").css("border","1px solid #0ed145")
+    }
+
+    return true;
+}
+function isEmail(str_email) {
+    var reg = /^([a-zA-Z0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+    var re = new RegExp(reg);
+    if(re.test(str_email)){
+        return true;
+    }else{
+        return false;
+    }
+}
+function isURL(str_url){
+    var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+        + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+        + "|" // 允许IP和DOMAIN（域名）
+        + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+        + "[a-z]{2,6})" // first level domain- .com or .museum
+        + "(:[0-9]{1,4})?" // 端口- :80
+        + "((/?)|" // a slash isn't required if there is no file name
+        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+    var re=new RegExp(strRegex);
+    //re.test()
+    if (re.test(str_url)){
+        return (true);
+    }else{
+        return (false);
+    }
 }
 
 /**
