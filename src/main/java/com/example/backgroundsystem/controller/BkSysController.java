@@ -3,10 +3,15 @@ package com.example.backgroundsystem.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.backgroundsystem.domain.BkSys.AdminUser;
+import com.example.backgroundsystem.domain.blogsys.Blog;
+import com.example.backgroundsystem.domain.blogsys.Tag;
+import com.example.backgroundsystem.domain.response.operateBlogResponse;
 import com.example.backgroundsystem.service.BkSysService;
+import com.example.backgroundsystem.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -15,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.List;
 
 @Controller
 @RequestMapping("admin")
@@ -25,6 +31,9 @@ public class BkSysController {
 
     @Autowired
     private BkSysService bkSysService;
+
+    @Autowired
+    private BlogService blogService;
 
     @RequestMapping({"/","index","index.html"})
     public ModelAndView index(HttpServletRequest request){
@@ -88,18 +97,47 @@ public class BkSysController {
     public ModelAndView addArticle(HttpServletRequest request){
         mav.clear();
         mav.setViewName("BkSys/pages/add-article");
+        try{
+            List<Tag> tags = blogService.listBlogTags();
+            mav.addObject("tags",tags);
+        }catch (Exception e){
+            e.printStackTrace();  //应该抛出一个异常
+        }
         getUserInfoFormSession(request,mav);
         return mav;
     }
 
+
     /**
-     * 写博客的markdown编辑器
+     * 插入博客
+     * @param content
+     * @param title
+     * @param tags  博客的标签
      * @return
      */
-    @RequestMapping("markdown")
-    public String markdown(){
-        return "BkSys/pages/markdown";
+    @ResponseBody
+    @RequestMapping("insertBlog")
+    public String insertBlog(String content,String title,String tags){
+        try{
+            Blog blog = new Blog();
+            blog.setContent(content);
+            blog.setTitle(title);
+            if(tags==null){
+                System.out.println("tags null");
+                return "false";
+            }
+            System.out.println(tags);
+            blogService.insertBlog(blog,tags);
+            System.out.println(tags);
+//            return JSON.toJSONString(new operateBlogResponse(1,"添加成功"));
+            return "true";
+        }catch (Exception e){
+//            return JSON.toJSONString(new operateBlogResponse(2,"添加失败"));
+            System.out.println(e.getMessage());
+            return "false";
+        }
     }
+
 
 
     /**

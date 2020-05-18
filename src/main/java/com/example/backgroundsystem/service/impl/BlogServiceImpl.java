@@ -2,6 +2,7 @@ package com.example.backgroundsystem.service.impl;
 
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
+import com.example.backgroundsystem.domain.blogsys.Tag;
 import com.example.backgroundsystem.domain.page.BlogPage;
 import com.example.backgroundsystem.mapper.BlogMapper;
 import com.example.backgroundsystem.mapper.CommentMapper;
@@ -116,6 +117,19 @@ public class BlogServiceImpl implements BlogService {
         return new BlogPage(totalItems,totalPages,currentPage,pageMaxItems,blogs);
     }
 
+    /**
+     * 将博客按照时间划分为不同的范围
+     *  如：
+     *      2013-5
+     *          5-12
+     *          5-13
+     *      2013-6
+     *          6-10
+     *          6-20
+     *      。。。。。
+     * 这一操作是为了博客系统的归档功能
+     * @return
+     */
     @Override
     public Map<String, List<Blog>> calBlogByDate() {
         List<Blog> blogs = blogMapper.listAllBlog();
@@ -145,9 +159,16 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public void insertBlog(Blog blog) {
+    public void insertBlog(Blog blog, String tags) {
         blog.setWriteTime(new Date());
         blogMapper.insertBlog(blog);
+        int primaryKey = blog.getbId();  //获取新插入数据的主键
+        String[] tagArr = tags.split(",");
+        for(int i = 0;i<tagArr.length;i++){
+            System.out.println(Integer.parseInt(tagArr[i])+":"+primaryKey);
+            blogMapper.insertTagWithBlog(Integer.parseInt(tagArr[i]),primaryKey);
+
+        }
     }
 
     @Override
@@ -181,5 +202,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public void deleteBlog(int id) {
         blogMapper.deleteBolg(id);
+    }
+
+    @Override
+    public List<Tag> listBlogTags() {
+        return blogMapper.listBlogTags();
     }
 }

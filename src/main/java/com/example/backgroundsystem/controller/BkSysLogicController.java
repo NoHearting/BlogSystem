@@ -19,12 +19,12 @@ public class BkSysLogicController {
 
     @ResponseBody
     @RequestMapping("insertBlog")
-    public String insertBlog(String content,String title){
+    public String insertBlog(String content,String title,String tags){
         try{
             Blog blog = new Blog();
             blog.setContent(content);
             blog.setTitle(title);
-            blogService.insertBlog(blog);
+            blogService.insertBlog(blog,tags);
             return JSON.toJSONString(new operateBlogResponse(1,"添加成功"));
         }catch (Exception e){
             return JSON.toJSONString(new operateBlogResponse(2,"添加失败"));

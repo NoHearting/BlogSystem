@@ -2,6 +2,7 @@ package com.example.backgroundsystem.mapper;
 
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
+import com.example.backgroundsystem.domain.blogsys.Tag;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -47,7 +48,11 @@ public interface BlogMapper {
     @Select("select bId,title,writeTime from blog limit #{begin},#{num}")
     List<BlogNoContent> listBlogNoContent(@Param("begin") int begin, @Param("num") int num);
 
-
+    /**
+     * 插入一条博客并且返回主键
+     * @param blog
+     */
+    @Options(useGeneratedKeys = true, keyProperty = "bId", keyColumn = "bId")  //返回主键的值
     @Insert("insert into blog(title,writeTime,readTimes,content) values(#{title},#{writeTime},#{readTimes},#{content})")
     void insertBlog(Blog blog);
 
@@ -89,6 +94,27 @@ public interface BlogMapper {
     void addBlogReadTimes(int id);
 
 
+    /**
+     * 删除一篇博客
+     * @param id
+     */
     @Delete("delete from blog where bId = #{id}")
     void deleteBolg(int id);
+
+    /**
+     * 查询所有的标签
+     * @return
+     */
+    @Select("select * from tag")
+    List<Tag> listBlogTags();
+
+    /**
+     * 添加博客和标签之间的对应关系，即给博客加上标签
+     * @param tId
+     * @param bId
+     */
+    @Insert("insert into blog_tag(bId,tId) values(#{bId},#{tId})")
+    void insertTagWithBlog(@Param("tId") int tId, @Param("bId") int bId);
+
+
 }

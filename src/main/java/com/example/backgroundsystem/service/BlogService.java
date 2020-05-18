@@ -1,7 +1,7 @@
 package com.example.backgroundsystem.service;
 
 import com.example.backgroundsystem.domain.blogsys.Blog;
-import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
+import com.example.backgroundsystem.domain.blogsys.Tag;
 import com.example.backgroundsystem.domain.page.BlogPage;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface BlogService {
 
     Map<String, List<Blog>> calBlogByDate();
 
-    void insertBlog(Blog blog);
+    void insertBlog(Blog blog, String tags);
 
     Blog getPreBlog(int id);
 
@@ -34,4 +34,6 @@ public interface BlogService {
     void addBlogReadTimes(int id);
 
     void deleteBlog(int id);
+
+    List<Tag> listBlogTags();
 }

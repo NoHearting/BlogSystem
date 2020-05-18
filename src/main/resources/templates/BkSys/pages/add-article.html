@@ -53,7 +53,7 @@
                             </p>
                             -->
                             <hr>
-                            <form class="forms-sample">
+                            <form class="forms-sample" method="post" th:action="@{/admin/insertBlog}">
                                 <div class="form-group row">
                                     <!--<label for="exampleInputUsername2" class="col-sm-2 col-form-label">文章标题</label> -->
                                     <div class="col-sm-12">
@@ -63,9 +63,7 @@
                                 <!-- markdwon编辑器 -->
                                 <div>
                                     <div id="test-editor">
-                                        <textarea id="blog-html" style="display:none;" name="content">### 关于 Editor.md
-                                                **Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
-                                        </textarea>
+                                        <textarea id="blog-html" style="display:none;" name="content"></textarea>
 
                                         <textarea  class="editormd-html-textarea" ></textarea>
                                     </div>
@@ -79,36 +77,17 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
 
-                                                <div class="form-check form-check-primary tags" >
+                                                <div th:class="${tag.tId eq 1}? 'form-check form-check-success tags':
+                                                         (${tag.tId eq 2} ? 'form-check form-check-primary tags':
+                                                         (${tag.tId eq 3} ? 'form-check form-check-danger tags': 'form-check form-check-info tags'))"
+
+                                                     th:each="tag:${tags}">
                                                     <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" checked>
-                                                        Primary
+                                                        <input type="checkbox" class="form-check-input" name="tags" th:value="${tag.tId}">
+                                                        [[${tag.label}]]
                                                     </label>
                                                 </div>
-                                                <div class="form-check form-check-success tags" >
-                                                    <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" checked>
-                                                        Success
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-info tags" >
-                                                    <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" checked>
-                                                        Info
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-danger tags" >
-                                                    <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" checked>
-                                                        Danger
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-warning tags" >
-                                                    <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" checked>
-                                                        Warning
-                                                    </label>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

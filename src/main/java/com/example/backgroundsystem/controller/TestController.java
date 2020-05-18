@@ -115,4 +115,11 @@ public class TestController {
     public String bgTypography(){
         return "BkSys/pages/ui-features/typography";
     }
+
+
+    @RequestMapping("successInsert")
+    public String successInsert(Map<String,Object> model){
+        model.put("username","test");
+        return "BkSys/pages/success/success-add-article";
+    }
 }
