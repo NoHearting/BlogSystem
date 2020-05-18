@@ -78,9 +78,9 @@
                 <td class="td-manage">
                     <a style="text-decoration:none" onclick="member_stop(this,'10001')" href="javascript:;" title="停用"><i class="layui-icon">&#xe601;</i></a>
                     <a title="编辑" href="javascript:;" onclick="member_edit('编辑','/admin/articleadd','4','','510')"
-                       class="ml-5" style="text-decoration:none"><i class="layui-icon">&#xe642;</i></a>
-                    <a title="删除" href="javascript:;" onclick="member_del(this,'1')"
-                       style="text-decoration:none"><i class="layui-icon">&#xe640;</i></a>
+                       class="ml-5" style="text-decoration:none"><i class="layui-icon layui-icon-edit">&#xe642;</i></a>
+                    <a title="删除" href="javascript:;" th:onclick="member_del(this,'[[${blog.bId}]]')"
+                       style="text-decoration:none"><i class="layui-icon layui-icon-delete">&#xe640;</i></a>
                 </td>
             </tr>
         </tbody>
@@ -188,8 +188,19 @@
     function member_del(obj,id){
         layer.confirm('确认要删除吗？',{icon:3,title:'提示信息'},function(index){
             //发异步删除数据
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+            $.get("/admin/deleteBlog",{id:id},function (info) {
+                var data = JSON.parse(info);
+                if(data.status == 1){
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!',{icon:1,time:1000});
+                }else{
+                    layer.msg('删除失败!'+data.info,{icon:2,time:1000});
+                }
+
+            })
+
+
+
         });
     }
 </script>
