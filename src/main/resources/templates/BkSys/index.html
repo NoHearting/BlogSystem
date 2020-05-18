@@ -26,7 +26,7 @@
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-home"></i>                 
               </span>
-              Dashboard
+              总览
             </h3>
             <nav aria-label="breadcrumb">
               <ul class="breadcrumb">
@@ -42,11 +42,11 @@
               <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                   <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
-                  <h4 class="font-weight-normal mb-3">Weekly Sales
+                  <h4 class="font-weight-normal mb-3">文章总数
                     <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
-                  <h2 class="mb-5">$ 15,0000</h2>
-                  <h6 class="card-text">Increased by 60%</h6>
+                  <h2 class="mb-5">10</h2>
+                  <h6 class="card-text">最近新增 20篇</h6>
                 </div>
               </div>
             </div>
@@ -54,11 +54,11 @@
               <div class="card bg-gradient-info card-img-holder text-white">
                 <div class="card-body">
                   <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
-                  <h4 class="font-weight-normal mb-3">Weekly Orders
+                  <h4 class="font-weight-normal mb-3">阅读总数
                     <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">45,6334</h2>
-                  <h6 class="card-text">Decreased by 10%</h6>
+                  <h6 class="card-text">最近新增 2000次</h6>
                 </div>
               </div>
             </div>
@@ -66,11 +66,11 @@
               <div class="card bg-gradient-success card-img-holder text-white">
                 <div class="card-body">
                   <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
-                  <h4 class="font-weight-normal mb-3">Visitors Online
+                  <h4 class="font-weight-normal mb-3">评论总数
                     <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">95,5741</h2>
-                  <h6 class="card-text">Increased by 5%</h6>
+                  <h6 class="card-text">最近新增 1000</h6>
                 </div>
               </div>
             </div>
@@ -80,7 +80,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="clearfix">
-                    <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+                    <h4 class="card-title float-left">最近几月的信息</h4>
                     <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>                                     
                   </div>
                   <canvas id="visit-sale-chart" class="mt-4"></canvas>
@@ -90,7 +90,7 @@
             <div class="col-md-5 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Traffic Sources</h4>
+                  <h4 class="card-title">博客数量</h4>
                   <canvas id="traffic-chart"></canvas>
                   <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>                                                      
                 </div>
@@ -101,46 +101,25 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Recent Tickets</h4>
+                  <h4 class="card-title">最近友链</h4>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>
-                            Assignee
-                          </th>
-                          <th>
-                            Subject
-                          </th>
-                          <th>
-                            Status
-                          </th>
-                          <th>
-                            Last Update
-                          </th>
-                          <th>
-                            Tracking ID
-                          </th>
+                          <th>Assignee</th>
+                          <th>Subject</th>
+                          <th>Status</th>
+                          <th>Last Update</th>
+                          <th>Tracking ID</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>
-                            <img th:src="@{/BkSys/images/faces/face1.jpg}" class="mr-2" alt="image">
-                            David Grey
-                          </td>
-                          <td>
-                            Fund is not recieved
-                          </td>
-                          <td>
-                            <label class="badge badge-gradient-success">DONE</label>
-                          </td>
-                          <td>
-                            Dec 5, 2017
-                          </td>
-                          <td>
-                            WD-12345
-                          </td>
+                          <td><img th:src="@{/BkSys/images/faces/face1.jpg}" class="mr-2" alt="image">David Grey</td>
+                          <td>Fund is not recieved</td>
+                          <td><label class="badge badge-gradient-success">DONE</label></td>
+                          <td>Dec 5, 2017</td>
+                          <td>WD-12345</td>
                         </tr>
                         <tr>
                           <td>
@@ -247,36 +226,23 @@
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Project Status</h4>
+                  <h4 class="card-title">排行榜</h4>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>
-                            #
-                          </th>
-                          <th>
-                            Name
-                          </th>
-                          <th>
-                            Due Date
-                          </th>
-                          <th>
-                            Progress
-                          </th>
+                          <th>#</th>
+                          <th>名称</th>
+                          <th>标签</th>
+                          <th>编写日期</th>
+                          <th>阅读次数</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Herman Beck
-                          </td>
-                          <td>
-                            May 15, 2015
-                          </td>
+                          <td>1</td>
+                          <td>Herman Beck</td>
+                          <td>May 15, 2015</td>
                           <td>
                             <div class="progress">
                               <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>

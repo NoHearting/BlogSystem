@@ -19,7 +19,7 @@ import java.util.Map;
  * 这要进行后台系统的页面映射
  */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin2")
 public class BackgroundSystemController {
 
     @Autowired

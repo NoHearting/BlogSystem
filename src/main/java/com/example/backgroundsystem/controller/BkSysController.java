@@ -17,7 +17,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 @Controller
-@RequestMapping("admin2")
+@RequestMapping("admin")
 public class BkSysController {
 
     //返回视图和数据
@@ -30,11 +30,7 @@ public class BkSysController {
     public ModelAndView index(HttpServletRequest request){
         mav.clear();
         mav.setViewName("BkSys/index");
-        Object user = request.getSession().getAttribute("user");
-        System.out.println(user);
-        if(user != null){
-            mav.addObject("username",user);
-        }
+        getUserInfoFormSession(request,mav);
         return mav;
     }
 
@@ -42,7 +38,7 @@ public class BkSysController {
     public ModelAndView login(HttpServletRequest request){
         mav.clear();
         mav.setViewName("BkSys/pages/login");
-        AdminUser adminUser = findrememberPassword(request);
+        AdminUser adminUser = findRememberPassword(request);
         if(adminUser != null){
             mav.addObject("adminUser",adminUser);
         }
@@ -82,6 +78,30 @@ public class BkSysController {
         }
     }
 
+
+    /**
+     * 写博客
+     * @param request
+     * @return
+     */
+    @RequestMapping("addArticle")
+    public ModelAndView addArticle(HttpServletRequest request){
+        mav.clear();
+        mav.setViewName("BkSys/pages/add-article");
+        getUserInfoFormSession(request,mav);
+        return mav;
+    }
+
+    /**
+     * 写博客的markdown编辑器
+     * @return
+     */
+    @RequestMapping("markdown")
+    public String markdown(){
+        return "BkSys/pages/markdown";
+    }
+
+
     /**
      * 判断是否记住密码，
      * 记住密码则创建一个cookie来存放密码，cookie的时限为1天，返回true
@@ -113,7 +133,7 @@ public class BkSysController {
      * @param request
      * @return
      */
-    private AdminUser findrememberPassword(HttpServletRequest request){
+    private AdminUser findRememberPassword(HttpServletRequest request){
         Cookie[] cookies =  request.getCookies();//获取保存在request的所有cookie
         if(cookies != null){//判断cookies数组是否为空
             for(Cookie cookie : cookies){
@@ -129,4 +149,21 @@ public class BkSysController {
         return  null;
 
     }
+
+
+    /**
+     * 从session中查询用户的登录数据，
+     * 如果有数据，则写入ModelAndView传递给前端页面
+     * 如果没有，则什么都不做
+     * @param request
+     * @param mav
+     */
+    private void getUserInfoFormSession(HttpServletRequest request,ModelAndView mav){
+        Object user = request.getSession().getAttribute("user");
+        System.out.println(user);
+        if(user != null){
+            mav.addObject("username",user);
+        }
+    }
+
 }

@@ -22,64 +22,67 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">Dashboard</span>
+            <a class="nav-link" th:href="@{/admin/}">
+                <span class="menu-title">总览</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">UI Elements</span>
+            <a class="nav-link" data-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="blogs">
+                <span class="menu-title">博客管理</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div class="collapse" id="blogs">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Buttons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Typography</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">所有博客</a></li>
+                    <li class="nav-item"> <a class="nav-link" th:href="@{/admin/addArticle}">写博客</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">Icons</span>
-                <i class="mdi mdi-contacts menu-icon"></i>
+            <a class="nav-link" href="#comments" data-toggle="collapse" aria-expanded="false" aria-controls="comments">
+                <span class="menu-title">评论/留言</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-comment-text menu-icon"></i>
             </a>
+            <div class="collapse" id="comments">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="#">所有评论</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">所有留言</a></li>
+                </ul>
+            </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">Forms</span>
-                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+            <a class="nav-link" href="#friend-link" data-toggle="collapse" aria-expanded="false" aria-controls="friend-link">
+                <span class="menu-title">友情链接</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-web menu-icon"></i>
             </a>
+            <div class="collapse" id="friend-link">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="#">当前友链</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">添加友链</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">友链申请</a></li>
+                </ul>
+            </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">Charts</span>
+            <a class="nav-link" href="#system" data-toggle="collapse" aria-expanded="false" aria-controls="system">
+                <span class="menu-title">系统</span>
+                <i class="menu-arrow"></i>
                 <i class="mdi mdi-chart-bar menu-icon"></i>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="menu-title">Tables</span>
-                <i class="mdi mdi-table-large menu-icon"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                <span class="menu-title">Sample Pages</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-medical-bag menu-icon"></i>
-            </a>
-            <div class="collapse" id="general-pages">
+            <div class="collapse" id="system">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#"> Blank Page </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> Login </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> Register </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> 404 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#"> 500 </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">更新事件</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">管理员列表</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">系统统计</a></li>
+
                 </ul>
             </div>
         </li>
+
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#test-template" aria-expanded="false" aria-controls="general-pages">

@@ -117,23 +117,7 @@
             </plugin>
         </plugins>
 
-        <!--解决layui框架在SpringBoot中出现的显示不正确的问题-->
-        <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<filtering>true</filtering>-->
-                <!--<excludes>-->
-                    <!--<exclude>static/BackgroundSystem/lib/layui/**/*</exclude>-->
-                <!--</excludes>-->
-            <!--</resource>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources</directory>-->
-                <!--<filtering>false</filtering>-->
-                <!--<excludes>-->
-                    <!--<exclude>static/BackgroundSystem/lib/layui/**/*</exclude>-->
-                <!--</excludes>-->
-            <!--</resource>-->
-        <!--</resources>-->
+
     </build>
 
 </project>
