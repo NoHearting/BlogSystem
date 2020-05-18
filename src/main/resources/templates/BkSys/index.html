@@ -1,282 +1,389 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <title>后台管理系统</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="format-detection" content="telephone=no">
-  <!--<script type="text/javascript" src="/static/xiyuan/lib/loading/okLoading.js"></script>-->
-  <link rel="stylesheet" th:href="@{/BackgroundSystem/css/x-admin.css}" href="@{//BackgroundSystem/css/x-admin.css" media="all">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head th:include="BkSys/commons/header::header">
 
 </head>
-<style>
-  .show_list{display: block;}
-  .hide_lits{display: none;}
+<body >
+ 
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="BkSys/commons/navbar::navbar"></div>
 
-</style>
-<body>
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header header header-demo">
-    <div class="layui-main">
-      <div class="admin-logo-box">
-        <a class="logo" href="" title="logo">后台管理系统</a>
-        <div class="larry-side-menu">
-          <i class=" layui-icon iconfont" aria-hidden="true">&#xe83c;</i>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_sidebar.html -->
+      <div th:replace="BkSys/commons/sidebar::sidebar"></div>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="adcenter"><script src="http://www.cssmoban.com/include/new/ggad2_728x90.js}"></script></div>
+          <div style="height: 20px"></div>
+          <div class="page-header">
+            
+             
+             <h3 class="page-title">
+              <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>                 
+              </span>
+              Dashboard
+            </h3>
+            <nav aria-label="breadcrumb">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                  <span></span>Overview
+                  <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-danger card-img-holder text-white">
+                <div class="card-body">
+                  <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
+                  <h4 class="font-weight-normal mb-3">Weekly Sales
+                    <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  </h4>
+                  <h2 class="mb-5">$ 15,0000</h2>
+                  <h6 class="card-text">Increased by 60%</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-info card-img-holder text-white">
+                <div class="card-body">
+                  <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
+                  <h4 class="font-weight-normal mb-3">Weekly Orders
+                    <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                  </h4>
+                  <h2 class="mb-5">45,6334</h2>
+                  <h6 class="card-text">Decreased by 10%</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success card-img-holder text-white">
+                <div class="card-body">
+                  <img th:src="@{/BkSys/images/dashboard/circle.svg}" class="card-img-absolute" alt="circle-image"/>
+                  <h4 class="font-weight-normal mb-3">Visitors Online
+                    <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                  </h4>
+                  <h2 class="mb-5">95,5741</h2>
+                  <h6 class="card-text">Increased by 5%</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+                    <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>                                     
+                  </div>
+                  <canvas id="visit-sale-chart" class="mt-4"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Traffic Sources</h4>
+                  <canvas id="traffic-chart"></canvas>
+                  <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>                                                      
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Recent Tickets</h4>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            Assignee
+                          </th>
+                          <th>
+                            Subject
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th>
+                            Last Update
+                          </th>
+                          <th>
+                            Tracking ID
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <img th:src="@{/BkSys/images/faces/face1.jpg}" class="mr-2" alt="image">
+                            David Grey
+                          </td>
+                          <td>
+                            Fund is not recieved
+                          </td>
+                          <td>
+                            <label class="badge badge-gradient-success">DONE</label>
+                          </td>
+                          <td>
+                            Dec 5, 2017
+                          </td>
+                          <td>
+                            WD-12345
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <img th:src="@{/BkSys/images/faces/face2.jpg}" class="mr-2" alt="image">
+                            Stella Johnson
+                          </td>
+                          <td>
+                            High loading time
+                          </td>
+                          <td>
+                            <label class="badge badge-gradient-warning">PROGRESS</label>
+                          </td>
+                          <td>
+                            Dec 12, 2017
+                          </td>
+                          <td>
+                            WD-12346
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <img th:src="@{/BkSys/images/faces/face3.jpg}" class="mr-2" alt="image">
+                            Marina Michel
+                          </td>
+                          <td>
+                            Website down for one week
+                          </td>
+                          <td>
+                            <label class="badge badge-gradient-info">ON HOLD</label>
+                          </td>
+                          <td>
+                            Dec 16, 2017
+                          </td>
+                          <td>
+                            WD-12347
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <img th:src="@{/BkSys/images/faces/face4.jpg}" class="mr-2" alt="image">
+                            John Doe
+                          </td>
+                          <td>
+                            Loosing control on server
+                          </td>
+                          <td>
+                            <label class="badge badge-gradient-danger">REJECTED</label>
+                          </td>
+                          <td>
+                            Dec 3, 2017
+                          </td>
+                          <td>
+                            WD-12348
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Recent Updates</h4>
+                  <div class="d-flex">
+                    <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
+                      <i class="mdi mdi-account-outline icon-sm mr-2"></i>
+                      <span>jack Menqu</span>
+                    </div>
+                    <div class="d-flex align-items-center text-muted font-weight-light">
+                      <i class="mdi mdi-clock icon-sm mr-2"></i>
+                      <span>October 3rd, 2018</span>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-6 pr-1">
+                      <img th:src="@{/BkSys/images/dashboard/img_1.jpg}" class="mb-2 mw-100 w-100 rounded" alt="image">
+                      <img th:src="@{/BkSys/images/dashboard/img_4.jpg}" class="mw-100 w-100 rounded" alt="image">
+                    </div>
+                    <div class="col-6 pl-1">
+                      <img th:src="@{/BkSys/images/dashboard/img_2.jpg}" class="mb-2 mw-100 w-100 rounded" alt="image">
+                      <img th:src="@{/BkSys/images/dashboard/img_3.jpg}" class="mw-100 w-100 rounded" alt="image">
+                    </div>
+                  </div>
+                  <div class="d-flex mt-5 align-items-top">
+                    <img th:src="@{/BkSys/images/faces/face3.jpg}" class="img-sm rounded-circle mr-3" alt="image">
+                    <div class="mb-0 flex-grow">
+                      <h5 class="mr-2 mb-2">School Website - Authentication Module.</h5>
+                      <p class="mb-0 font-weight-light">It is a long established fact that a reader will be distracted by the readable
+                        content of a page.</p>
+                    </div>
+                    <div class="ml-auto">
+                      <i class="mdi mdi-heart-outline text-muted"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Project Status</h4>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            #
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Due Date
+                          </th>
+                          <th>
+                            Progress
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1
+                          </td>
+                          <td>
+                            Herman Beck
+                          </td>
+                          <td>
+                            May 15, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            2
+                          </td>
+                          <td>
+                            Messsy Adam
+                          </td>
+                          <td>
+                            Jul 01, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            3
+                          </td>
+                          <td>
+                            John Richards
+                          </td>
+                          <td>
+                            Apr 12, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            4
+                          </td>
+                          <td>
+                            Peter Meggik
+                          </td>
+                          <td>
+                            May 15, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            5
+                          </td>
+                          <td>
+                            Edward
+                          </td>
+                          <td>
+                            May 03, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            5
+                          </td>
+                          <td>
+                            Ronald
+                          </td>
+                          <td>
+                            Jun 05, 2015
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <div th:replace="BkSys/commons/footer::footer"></div>
+        <!-- partial -->
       </div>
-      <ul class="layui-nav layui-layout-left layui-ygyd-menu" style="position:absolute; left:250px;">
-        <li class="layui-nav-item daohang" ids="#table1"><a href="javascript:;">基础设置</a></li>
-        <li class="layui-nav-item daohang" ids="#table2"><a href="javascript:;">系统设置</a></li>
-
-      </ul>
-
-      <ul class="layui-nav" lay-filter="">
-        <li class="layui-nav-item" id="time" style="margin-right: 50px;font-size: 20px;color: #2fb9d4;font-family: 'yjsz'"></li>
-        <li class="layui-nav-item">
-          <a href="" title="系统公告">
-
-          </a>
-        </li>
-        <li class="layui-nav-item">
-          <a href="" title="消息">
-            <i class="layui-icon" style="top: 1px;">&#xe65c;</i>
-          </a>
-        </li>
-        <li class="layui-nav-item"><img th:src="@{/BackgroundSystem/images/logo.png}" src="@{/BackgroundSystem/images/logo.png}" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
-        <li class="layui-nav-item"> <a href="javascript:;" th:text="${user}">admin</a>
-          <dl class="layui-nav-child">
-            <!-- 二级菜单 -->
-            <dd><a href="javascript:;" th:onclick="member_show('[[${user}]]','/admin/membershow','10001','360','400')">个人信息</a></dd>
-            <dd><a href="">切换帐号</a></dd>
-            <dd><a th:href="@{/admin/logout}">退出</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item x-index"><a href="#">前台首页</a></li>
-      </ul>
+      <!-- main-panel ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
+  <!-- container-scroller -->
 
-  <!--左侧导航区域-->
-  <div class="layui-side layui-bg-black x-side show_list" style="left:0px;" id="table1">
-    <div style="height: 130px; width: 220px; ">
-      <a class="img" title="我的头像" style="display: block;width: 80px;height: 80px;margin: 10px auto 10px;">
-        <img th:src="@{/BackgroundSystem/images/logo.png}" src="@{/BackgroundSystem/images/logo.png" class="userAvatar" style="display: block;width: 100%;height: 100%;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;border: 4px solid #44576b;box-sizing: border-box;">
-      </a>
-      <p style=" display: block;width: 100%;height: 25px;color: #ffffff;text-align: center;font-size: 12px;white-space: nowrap;line-height: 25px;overflow: hidden;">
-        你好！<span class="userName" th:text="${user}">admin</span>, 欢迎回来
-      </p>
-    </div>
-    <div class="layui-side-scroll">
-      <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe65c;</i><cite>栏目管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class="">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/catelist}"> <cite>栏目列表</cite> </a> </dd>
-            </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe661;</i><cite>文章管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class="">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/articletypelist}"> <cite>文章类型列表</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/articlelist}"> <cite>文章列表</cite> </a> </dd>
-            <dd><a href="javascript:;" th:_href="@{/admin/articleadd}"><cite>写文章</cite></a></dd>
-            </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe60b;</i><cite>公告管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class="">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/noticetypelist}"> <cite>公告类型</cite> </a> </dd>
-            </dd>
-            <dd class="">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/noticelist}"> <cite>公告列表</cite> </a> </dd>
-            </dd>
+  <div th:replace="BkSys/commons/footJs::footJs"></div>
 
-          </dl>
-        </li>
-          <!-- &#xe634; -->
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="iconfont layui-icon" style="top: 3px;">&#xe61e;</i><cite>轮播管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class="">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/bannerlist}"> <cite>轮播列表</cite> </a> </dd>
-            </dd>
-          </dl>
-        </li>
-
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe621;</i><cite>分类管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/category}"> <cite>分类列表</cite> </a> </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe60f;</i><cite>评论管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/commentlist}"> <cite>评论列表</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/feedbacklist}"> <cite>意见反馈</cite> </a> </dd>
-          </dl>
-        </li>
-
-        <li class="layui-nav-item" style="height: 30px; text-align: center"> </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="layui-side layui-bg-black x-side hide_lits " style="left:0px;" id="table2">
-    <div style="height: 130px; width: 220px; " class="head-img">
-      <a class="img" title="我的头像" style="display: block;width: 80px;height: 80px;margin: 10px auto 10px;">
-        <img th:src="@{/BackgroundSystem/images/logo.png}" src="@{/BackgroundSystem/images/logo.png" class="userAvatar" style="display: block;width: 100%;height: 100%;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;border: 4px solid #44576b;box-sizing: border-box;">
-      </a>
-      <p style=" display: block;width: 100%;height: 25px;color: #ffffff;text-align: center;font-size: 12px;white-space: nowrap;line-height: 25px;overflow: hidden;">
-        你好！<span class="userName">admin</span>, 欢迎回来
-      </p>
-    </div>
-    <div class="layui-side-scroll">
-      <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
-
-
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont" style="top: 3px;">&#xe625;</i><cite>会员管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberlist}"> <cite>会员列表</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberdel}"> <cite>删除会员</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberlevel}"> <cite>等级管理</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberkiss}"> <cite>积分管理</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberview}"> <cite>浏览记录</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/memberview}"> <cite>分享记录</cite> </a> </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe613;</i><cite>管理员管理</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/adminlist}"> <cite>管理员列表</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/adminrole}"> <cite>角色管理</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/admincate}"> <cite>权限分类</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/adminrule}"> <cite>权限管理</cite> </a> </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe629;</i><cite>系统统计</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/echart}"> <cite>统计报表</cite> </a> </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe614;</i><cite>系统设置</cite> </a>
-          <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/sysset}"> <cite>系统设置</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/sysdata}"> <cite>数字字典</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/sysshield}"> <cite>屏蔽词</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/syslog}"> <cite>系统日志</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/syslink}"> <cite>友情链接</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" th:_href="@{/admin/sysqq}"> <cite>第三方登录</cite> </a> </dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item" style="height: 30px; text-align: center"> </li>
-      </ul>
-    </div>
-  </div>
-
-
-
-
-
-  <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 220px;border-left: solid 2px #2299ee;">
-    <ul class="layui-tab-title">
-      <li class="layui-this"> 我的桌面 <i class="layui-icon layui-unselect layui-tab-close">ဆ</i> </li>
-    </ul>
-    <div class="layui-tab-content site-demo site-demo-body">
-      <div class="layui-tab-item layui-show">
-        <iframe frameborder="0"  th:src="@{/admin/welcome}" class="x-iframe"></iframe>
-      </div>
-    </div>
-  </div>
-  <div class="site-mobile-shade"> </div>
-
-</div>
-
-<script th:src="@{/BackgroundSystem/lib/layui/layui.js}" src="@{//BackgroundSystem/lib/layui/layui.js" charset="utf-8"></script>
-<script th:src="@{/BackgroundSystem/js/x-admin.js}" src="@{//BackgroundSystem/js/x-admin.js"></script>
-<script th:src="@{/BackgroundSystem/js/jquery.min.js}" src="@{//BackgroundSystem/js/jquery.min.js"></script>
-<script th:src="@{/BackgroundSystem/js/x-layui.js}" src="@{//BackgroundSystem/js/x-layui.js" charset="utf-8"></script>
-
-<script>
-    $(".daohang").click(function(){
-        var table = $(this).attr("ids");
-        var ids = $(".show_list").attr("id");
-        $("#"+ids+"").addClass("hide_lits");
-        $("#"+ids+"").removeClass("show_list");
-        $(""+table+"").removeClass("hide_lits");
-        $(""+table+"").addClass("show_list");
-    })
-
-
-</script>
-<script>
-    layui.use(['laydate','element','laypage','layer'], function(){
-        $ = layui.jquery;//jquery
-        laydate = layui.laydate;//日期插件
-        lement = layui.element();//面包导航
-        laypage = layui.laypage;//分页
-        layer = layui.layer;//弹出层
-        //以上模块根据需要引入
-
-    });
-
-    function logout() {
-
-        $.ajax({
-            type:"post",
-            url:"",
-            data:{e:1},
-            dataType:"json",
-            success:function (data) {
-                if(data.status==1){
-                    layer.msg(data.info,{icon:1,time:1000});
-                    setTimeout("window.location.href='{:url('Login/login')}'",2000);return false;
-                    return false;
-                }else{
-                    layer.msg(data.info,{icon:5,time:2000});return false;
-                }
-            }
-
-        })
-        return false;
-    }
-
-    function member_show(title,url,id,w,h){
-      x_admin_show(title,url,w,h);
-    }
-</script>
-<script>
-    //顶部时间
-    function getTime(){
-        var myDate = new Date();
-        var myYear = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
-        var myMonth = myDate.getMonth()+1; //获取当前月份(0-11,0代表1月)
-        var myToday = myDate.getDate(); //获取当前日(1-31)
-        var myDay = myDate.getDay(); //获取当前星期X(0-6,0代表星期天)
-        var myHour = myDate.getHours(); //获取当前小时数(0-23)
-        var myMinute = myDate.getMinutes(); //获取当前分钟数(0-59)
-        var mySecond = myDate.getSeconds(); //获取当前秒数(0-59)
-        var week = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
-        var nowTime;
-
-        nowTime = myYear+'-'+fillZero(myMonth)+'-'+fillZero(myToday)+'&nbsp;&nbsp;'+fillZero(myHour)+':'+fillZero(myMinute)+':'+fillZero(mySecond)+'&nbsp;&nbsp;'+week[myDay]+'&nbsp;&nbsp;';
-        //console.log(nowTime);
-        $('#time').html(nowTime);
-    };
-    function fillZero(str){
-        var realNum;
-        if(str<10){
-            realNum	= '0'+str;
-        }else{
-            realNum	= str;
-        }
-        return realNum;
-    }
-    setInterval(getTime,1000);
-</script>
 </body>
+
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>底部JS文件的导入</title>
+</head>
+<body>
+<div th:fragment="footJs">
+    <!-- plugins:js -->
+    <script th:src="@{/BkSys/vendors/js/vendor.bundle.base.js}"></script>
+    <script th:src="@{/BkSys/vendors/js/vendor.bundle.addons.js}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script th:src="@{/BkSys/js/off-canvas.js}"></script>
+    <script th:src="@{/BkSys/js/misc.js}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script th:src="@{/BkSys/js/dashboard.js}"></script>
+    <!-- End custom js for this page-->
+    <!--  图表 -->
+    <script th:src="@{/BkSys/js/chart.js}"></script>
+</div>
+</body>
+</html>

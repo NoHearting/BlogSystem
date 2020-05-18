@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 处理评论
+ */
 @Controller
 public class CommentController {
 

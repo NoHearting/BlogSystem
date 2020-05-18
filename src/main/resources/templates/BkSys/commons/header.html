@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>网页的header</title>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>博客后台系统</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/BkSys/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/BkSys/vendors/css/vendor.bundle.base.css}">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/BkSys/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" th:href="@{/BkSys/images/favicon.png}" />
+</div>
+</body>
+</html>
