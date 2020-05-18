@@ -32,4 +32,6 @@ public interface BlogService {
     Blog getCurrentBlog(Integer id);
 
     void addBlogReadTimes(int id);
+
+    void deleteBlog(int id);
 }

@@ -2,10 +2,7 @@ package com.example.backgroundsystem.mapper;
 
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -90,4 +87,8 @@ public interface BlogMapper {
      */
     @Update("update blog set readTimes = readTimes + 1 where bId = #{id}")
     void addBlogReadTimes(int id);
+
+
+    @Delete("delete from blog where bId = #{id}")
+    void deleteBolg(int id);
 }

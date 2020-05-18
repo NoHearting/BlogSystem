@@ -31,43 +31,27 @@ public class UploadController {
             map.put("url","null");
             return JSON.toJSONString(map);
         }
-//        // 拿到文件名
-//        String filename = upload.getOriginalFilename();
-//
-//        // 存放上传图片的文件夹
-//        File fileDir = UploadUtils.getImgDirFile();
-//        // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
-//        System.out.println(fileDir.getAbsolutePath());
+        // 拿到文件名
+        String filename = upload.getOriginalFilename();
 
-
+        // 存放上传图片的文件夹
+        File fileDir = UploadUtils.getImgDirFile();
+        // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
+        System.out.println(fileDir.getAbsolutePath());
 
         try {
             // 构建真实的文件路径
             String randomStr = UUID.randomUUID().toString().replace("-", "");
-            String path = request.getServletContext().getRealPath("/")+"/upload/pic/"+randomStr+upload.getOriginalFilename();
-            File newFile = new File(path);
-            LoggerUtils.debug(newFile.getAbsolutePath());
+            File newFile = new File(fileDir.getAbsolutePath() + File.separator + randomStr+filename);
+            System.out.println(newFile.getAbsolutePath());
+
+            // 上传图片到 -》 “绝对路径”
+            upload.transferTo(newFile);
 
 
-            if(!(newFile.getParentFile().exists())){
-                newFile.getParentFile().mkdirs();
-            }
-            try {
-                upload.transferTo(newFile); //转存文件
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-//            // 上传图片到 -》 “绝对路径”
-//            upload.transferTo(newFile);
-//
-//            String contextPath = request.getContextPath();
-//            if(contextPath.length()<1){
-//                contextPath += File.separator;
-//            }
-
-            String url = "/upload/pic/"+randomStr+upload.getOriginalFilename();
+            String url = UploadUtils.IMG_PATH_PREFIX+File.separator+randomStr+upload.getOriginalFilename();
+            System.out.println(url);
+//            String url = "/WEB-INF/upload/images/"+randomStr+upload.getOriginalFilename();
             map.put("success",1);
             map.put("message","上传成功");
             map.put("url",url);

@@ -177,4 +177,9 @@ public class BlogServiceImpl implements BlogService {
     public void addBlogReadTimes(int id) {
         blogMapper.addBlogReadTimes(id);
     }
+
+    @Override
+    public void deleteBlog(int id) {
+        blogMapper.deleteBolg(id);
+    }
 }
