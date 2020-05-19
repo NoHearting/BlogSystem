@@ -165,9 +165,7 @@ public class BlogServiceImpl implements BlogService {
         int primaryKey = blog.getbId();  //获取新插入数据的主键
         String[] tagArr = tags.split(",");
         for(int i = 0;i<tagArr.length;i++){
-            System.out.println(Integer.parseInt(tagArr[i])+":"+primaryKey);
             blogMapper.insertTagWithBlog(Integer.parseInt(tagArr[i]),primaryKey);
-
         }
     }
 

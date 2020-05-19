@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<div class="container-scroller">
+    <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <div th:replace="BkSys/commons/navbar::navbar(username=${username})"></div>
     <!-- partial -->
@@ -32,8 +32,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <blockquote class="blockquote blockquote-primary">
-                                    <p  class="text-success h4">题目</p>
-                                    <footer class="blockquote-footer">编写于 <cite title="Source Title" ">Source Title</cite></footer>
+                                    <p  class="text-success h4" th:text="${blog.title}">题目</p>
+                                    <footer class="blockquote-footer">编写于 <cite title="Source Title" th:text="${blog.writeTime}">Source Title</cite></footer>
                                     <button type="button" class="btn btn-link btn-fw">查看文章</button>
                                     <button type="button" class="btn btn-link btn-fw">在写一篇</button>
                                 </blockquote>
@@ -50,9 +50,9 @@
         <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
-</div>
+    </div>
 <!-- container-scroller -->
-<div th:replace="BkSys/commons/footJs::footJs"></div>
+    <div th:replace="BkSys/commons/footJs::footJs"></div>
 </body>
 
 </html>

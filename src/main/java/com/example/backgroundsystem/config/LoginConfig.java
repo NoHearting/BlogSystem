@@ -14,11 +14,10 @@ public class LoginConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //注册TestInterceptor拦截器
         InterceptorRegistration registration = registry.addInterceptor(new AdminInterceptor());
-        registration.addPathPatterns("/admin2/**");                      //所有路径都被拦截
+        registration.addPathPatterns("/admin/**");                      //所有路径都被拦截
         registration.excludePathPatterns(                         //添加不拦截路径
-                "/admin/login",            //登录
-                "/admin/index",
-                "/admin/",
+                "/admin/login",            //登录页面
+                "/admin/loginAction",     //登录请求
                 "/**/*.html",            //html静态资源
                 "/**/*.js",              //js静态资源
                 "/**/*.css",             //css静态资源

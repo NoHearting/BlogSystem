@@ -6,10 +6,13 @@ import com.example.backgroundsystem.domain.BkSys.AdminUser;
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.Tag;
 import com.example.backgroundsystem.domain.response.operateBlogResponse;
+import com.example.backgroundsystem.exception.BlogException;
 import com.example.backgroundsystem.service.BkSysService;
 import com.example.backgroundsystem.service.BlogService;
+import com.example.backgroundsystem.utils.MyDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +42,7 @@ public class BkSysController {
     public ModelAndView index(HttpServletRequest request){
         mav.clear();
         mav.setViewName("BkSys/index");
-        getUserInfoFormSession(request,mav);
+//        getUserInfoFormSession(request,mav);
         return mav;
     }
 
@@ -49,7 +52,7 @@ public class BkSysController {
         mav.setViewName("BkSys/pages/login");
         AdminUser adminUser = findRememberPassword(request);
         if(adminUser != null){
-            mav.addObject("adminUser",adminUser);
+            mav.addObject("adminUser",adminUser);   //传回记住密码的用户的登录密码
         }
         return mav;
     }
@@ -65,7 +68,7 @@ public class BkSysController {
     @RequestMapping("loginAction")
     public ModelAndView loginAction(String username, String password, String remember, HttpServletRequest request,HttpServletResponse response){
         mav.clear();
-        System.out.println(remember);
+//        System.out.println("loginAction"+remember);
         if(bkSysService.login(username,password)){
 
             try {
@@ -73,14 +76,15 @@ public class BkSysController {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            request.getSession().setAttribute("user",username);  //登录状态
+            request.getSession().setAttribute("username",username);  //登录状态
 
-            mav.addObject("username",username);
+//            mav.addObject("username",username);
             mav.addObject("error",null);
             mav.setViewName("BkSys/index");
-            System.out.println(mav);
+//            System.out.println(mav);
             return mav;
         }else{
+            System.out.println("账号或者密码错误");
             mav.addObject("error","账号或者密码错误");
             mav.setViewName("BkSys/pages/login");
             return mav;
@@ -103,7 +107,7 @@ public class BkSysController {
         }catch (Exception e){
             e.printStackTrace();  //应该抛出一个异常
         }
-        getUserInfoFormSession(request,mav);
+//        getUserInfoFormSession(request,mav);
         return mav;
     }
 
@@ -115,29 +119,36 @@ public class BkSysController {
      * @param tags  博客的标签
      * @return
      */
-    @ResponseBody
     @RequestMapping("insertBlog")
-    public String insertBlog(String content,String title,String tags){
+    public ModelAndView insertBlog(String content, String title, String tags) throws Exception {
+        mav.clear();
         try{
             Blog blog = new Blog();
             blog.setContent(content);
             blog.setTitle(title);
-            if(tags==null){
-                System.out.println("tags null");
-                return "false";
-            }
-            System.out.println(tags);
+//            System.out.println(tags);
             blogService.insertBlog(blog,tags);
             System.out.println(tags);
 //            return JSON.toJSONString(new operateBlogResponse(1,"添加成功"));
-            return "true";
+            mav.addObject("addBlog",new Blog(1,title,null,new MyDate(),0));
+            mav.setViewName("BkSys/pages/success/success-add-article");
+            return mav;
         }catch (Exception e){
 //            return JSON.toJSONString(new operateBlogResponse(2,"添加失败"));
-            System.out.println(e.getMessage());
-            return "false";
+//            System.out.println(e.getMessage());
+            throw new BlogException("添加博客失败，请重试",500);
         }
     }
 
+    /**
+     * 所有博客页面，查询出所有的博客
+     * @return
+     */
+    @RequestMapping("blogs")
+    public ModelAndView blogs(){
+        mav.clear();
+        mav.setViewName("BkSys/pages/blogs");
+    }
 
 
     /**
@@ -189,19 +200,6 @@ public class BkSysController {
     }
 
 
-    /**
-     * 从session中查询用户的登录数据，
-     * 如果有数据，则写入ModelAndView传递给前端页面
-     * 如果没有，则什么都不做
-     * @param request
-     * @param mav
-     */
-    private void getUserInfoFormSession(HttpServletRequest request,ModelAndView mav){
-        Object user = request.getSession().getAttribute("user");
-        System.out.println(user);
-        if(user != null){
-            mav.addObject("username",user);
-        }
-    }
+
 
 }
