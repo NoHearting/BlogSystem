@@ -19,7 +19,7 @@ public class BkSysLogicController {
 
     @ResponseBody
     @RequestMapping("insertBlog")
-    public String insertBlog(String content,String title,String tags){
+    public String insertBlog(String content,String title,int tags){
         try{
             Blog blog = new Blog();
             blog.setContent(content);

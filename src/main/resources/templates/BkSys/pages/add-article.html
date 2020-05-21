@@ -93,7 +93,7 @@
 
                                                      th:each="tag:${tags}">
                                                     <label class="form-check-label">
-                                                        <input type="checkbox" class="form-check-input" name="tags" th:value="${tag.tId}">
+                                                        <input type="radio" class="form-check-input" name="tags" th:value="${tag.tId}">
                                                         [[${tag.label}]]
                                                     </label>
                                                 </div>
@@ -123,6 +123,7 @@
   </div>
   <!-- container-scroller -->
   <div th:replace="BkSys/commons/footJs::footJs"></div>
+  <script th:src="@{/BkSys/js/customFunc/add-atricle.js}"></script>
 
 
   <script th:src="@{/editermd/examples/js/jquery.min.js}"></script>

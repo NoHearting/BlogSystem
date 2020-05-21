@@ -32,10 +32,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <blockquote class="blockquote blockquote-primary">
-                                    <p  class="text-success h4" th:text="${blog.title}">题目</p>
-                                    <footer class="blockquote-footer">编写于 <cite title="Source Title" th:text="${blog.writeTime}">Source Title</cite></footer>
-                                    <button type="button" class="btn btn-link btn-fw">查看文章</button>
-                                    <button type="button" class="btn btn-link btn-fw">在写一篇</button>
+                                    <p  class="text-success h4" th:text="${addBlog.title}">题目</p>
+                                    <footer class="blockquote-footer">编写于 <cite title="Source Title" th:text="${addBlog.writeTime}">Source Title</cite></footer>
+                                    <a type="button" th:href="@{/detail(id=${addBlog.bId})}" class="btn btn-link btn-fw">查看文章</a>
+                                    <button type="button" th:onclick="jumpPage('/admin/addArticle')" class="btn btn-link btn-fw">在写一篇</button>
                                 </blockquote>
                             </div>
                         </div>
@@ -53,6 +53,7 @@
     </div>
 <!-- container-scroller -->
     <div th:replace="BkSys/commons/footJs::footJs"></div>
+    <script th:src="@{/BkSys/js/customFunc/blogs.js}"></script>
 </body>
 
 </html>

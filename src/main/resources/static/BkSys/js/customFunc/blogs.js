@@ -92,9 +92,10 @@ function updateNavForPage(currentPage,totalPages) {
         }
     }
 
+    var prePage = (currPage-1) <= 1 ? 1 : (currPage-1);
+    var after = (currPage + 1) >= totalPages ? totalPages : (currPage + 1);
 
-
-    aTags += '<li><a href="javascript:updateBlogsWithPage('+(currPage-1)+')" >« </a></li>';
+    aTags += '<li><a href="javascript:updateBlogsWithPage('+prePage+')" >« </a></li>';
     for(var i = begin;i<=end;i++){
         if(i == currPage){
             aTags += ' <li><a class="active" href="javascript:void(0);">'+i+'</a></li>';
@@ -102,7 +103,7 @@ function updateNavForPage(currentPage,totalPages) {
             aTags += '<li><a href="javascript:updateBlogsWithPage('+i+')" >'+i+'</a></li>';
         }
     }
-    aTags += '<li><a href="javascript:updateBlogsWithPage('+(currPage+1)+')" >» </a></li>';
+    aTags += '<li><a href="javascript:updateBlogsWithPage('+after+')" >» </a></li>';
     container.empty();
     container.append(aTags);
 }
@@ -145,5 +146,10 @@ function updateBlogsWithPage(currPage){
         updateNavForPage(blogPage.currentPage,blogPage.totalPages);
     });
 
+}
+
+
+function jumpPage(url) {
+    window.location.href = ""+url;
 }
 

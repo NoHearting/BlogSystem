@@ -23,7 +23,7 @@ public interface BlogService {
 
     Map<String, List<Blog>> calBlogByDate();
 
-    void insertBlog(Blog blog, String tags);
+    void insertBlog(Blog blog, int tags);
 
     Blog getPreBlog(int id);
 

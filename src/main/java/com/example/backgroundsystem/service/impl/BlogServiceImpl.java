@@ -162,14 +162,9 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public void insertBlog(Blog blog, String tags) {
+    public void insertBlog(Blog blog, int tag) {
         blog.setWriteTime(new Date());
-        blogMapper.insertBlog(blog);
-        int primaryKey = blog.getbId();  //获取新插入数据的主键
-        String[] tagArr = tags.split(",");
-        for(int i = 0;i<tagArr.length;i++){
-            blogMapper.insertTagWithBlog(Integer.parseInt(tagArr[i]),primaryKey);
-        }
+        blogMapper.insertBlog(blog,tag);
     }
 
     @Override

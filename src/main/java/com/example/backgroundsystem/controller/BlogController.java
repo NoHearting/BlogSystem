@@ -142,6 +142,7 @@ public class BlogController {
     @GetMapping("detail")
     public String details(Integer id,Integer currentPage, Integer pageMaxItems,Map<String,Object> map){
         map.put("id",(Integer)id);
+        System.out.println("blog id:"+id);
         CommentPage comments = null;
         if(null==currentPage||null==pageMaxItems||(currentPage==1 && pageMaxItems == 10)){
             comments = commentService.getComments(id, 1, 10);

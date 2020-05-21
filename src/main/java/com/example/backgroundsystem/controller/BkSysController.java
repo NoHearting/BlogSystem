@@ -120,17 +120,15 @@ public class BkSysController {
      * @return
      */
     @RequestMapping("insertBlog")
-    public ModelAndView insertBlog(String content, String title, String tags) throws Exception {
+    public ModelAndView insertBlog(String content, String title, int tags) throws Exception {
         mav.clear();
         try{
             Blog blog = new Blog();
             blog.setContent(content);
             blog.setTitle(title);
-//            System.out.println(tags);
             blogService.insertBlog(blog,tags);
             System.out.println(tags);
-//            return JSON.toJSONString(new operateBlogResponse(1,"添加成功"));
-            mav.addObject("addBlog",new Blog(1,title,null,new MyDate(),0));
+            mav.addObject("addBlog",new Blog(blog.getbId(),title,null,new MyDate(),0));
             mav.setViewName("BkSys/pages/success/success-add-article");
             return mav;
         }catch (Exception e){

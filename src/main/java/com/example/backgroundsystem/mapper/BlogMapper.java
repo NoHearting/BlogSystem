@@ -52,10 +52,11 @@ public interface BlogMapper {
     /**
      * 插入一条博客并且返回主键
      * @param blog
+     * @param tag
      */
-    @Options(useGeneratedKeys = true, keyProperty = "bId", keyColumn = "bId")  //返回主键的值
-    @Insert("insert into blog(title,writeTime,readTimes,content) values(#{title},#{writeTime},#{readTimes},#{content})")
-    void insertBlog(Blog blog);
+    @Options(useGeneratedKeys = true, keyProperty = "blog.bId", keyColumn = "bId")  //返回主键的值
+    @Insert("insert into blog(title,writeTime,readTimes,content,tId) values(#{blog.title},#{blog.writeTime},#{blog.readTimes},#{blog.content},#{tId})")
+    void insertBlog(@Param("blog") Blog blog,@Param("tId") int tag);
 
     @Select("select bId,title,writeTime,readTimes from blog order by writeTime desc")
     List<Blog> listAllBlog();
