@@ -25,6 +25,9 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     CommentMapper commentMapper;
 
+
+    //分页查询每一页最大的条目数
+    private final int MAX_PAGE_ITEMS = 10;
     /**
      * 获取所有博客处理之后并返回,可以选择是否将博客内容截取（截断）
      * 在页面上需要简短显示，所以需要截取
@@ -199,11 +202,34 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void deleteBlog(int id) {
-        blogMapper.deleteBolg(id);
+        blogMapper.deleteBlog(id);
+    }
+
+    @Override
+    public void deleteBlogs(String bIds) {
+        String[] bIdArr = bIds.split(" ");
+        for(int i = 0;i<bIdArr.length;i++){
+            blogMapper.deleteBlog(Integer.parseInt(bIdArr[i]));
+        }
     }
 
     @Override
     public List<Tag> listBlogTags() {
         return blogMapper.listBlogTags();
+    }
+
+    @Override
+    public BlogPage listBlogForBkSys(int currentPage) {
+        if(currentPage<1){
+            currentPage = 1;
+        }
+        int total = blogMapper.countBlog();  //总数
+        int pages = PageUtils.calTotalPages(total,MAX_PAGE_ITEMS);  //总页数
+        int begin = PageUtils.calBeginItemIndex(MAX_PAGE_ITEMS,currentPage);   //开始的下标
+        currentPage = currentPage > pages ? pages : currentPage;
+        List<Blog> blogs = blogMapper.listBlog(begin, MAX_PAGE_ITEMS);
+        CommonUtils.dealDate(blogs);  //格式化日期
+        BlogPage blogPage = new BlogPage(total,pages,currentPage,MAX_PAGE_ITEMS,blogs);
+        return blogPage;
     }
 }

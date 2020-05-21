@@ -1,14 +1,17 @@
 package com.example.backgroundsystem.domain.blogsys;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 
 @NoArgsConstructor
+@JsonIgnoreProperties(value = { "handler" })
 public class Blog extends BaseBlog{
     private String content;
     private int readTimes;
+
 
     public Blog(int bId,String title,String content,Date writeTime,int readTimes){
         super(bId, title, writeTime);
@@ -44,6 +47,7 @@ public class Blog extends BaseBlog{
                 "bId=" + getbId() +
                 ", title='" + getTitle() + '\'' +
                 ", content='" + content + '\'' +
+                ",tag="+getTag()+"\'"+
                 ", writeTime=" + getWriteTime() +
                 ", readTimes=" + readTimes +
                 '}';

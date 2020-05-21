@@ -5,14 +5,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.backgroundsystem.domain.BkSys.AdminUser;
 import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.Tag;
-import com.example.backgroundsystem.domain.response.operateBlogResponse;
+import com.example.backgroundsystem.domain.page.BlogPage;
+import com.example.backgroundsystem.domain.response.OperateBlogResponse;
 import com.example.backgroundsystem.exception.BlogException;
 import com.example.backgroundsystem.service.BkSysService;
 import com.example.backgroundsystem.service.BlogService;
 import com.example.backgroundsystem.utils.MyDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -136,20 +136,64 @@ public class BkSysController {
         }catch (Exception e){
 //            return JSON.toJSONString(new operateBlogResponse(2,"添加失败"));
 //            System.out.println(e.getMessage());
+            e.printStackTrace();
             throw new BlogException("添加博客失败，请重试",500);
         }
     }
 
+    @ResponseBody
+    @RequestMapping("deleteBlogs")
+    public OperateBlogResponse deleteBlogs(String bIds){
+        System.out.println(bIds);
+        try{
+            blogService.deleteBlogs(bIds);
+            return new OperateBlogResponse(1,"删除成功");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new OperateBlogResponse(0,"出现了一点小问题！！！");
+        }
+    }
     /**
-     * 所有博客页面，查询出所有的博客
+     * 所有博客页面，查询出第一页的博客
      * @return
      */
     @RequestMapping("blogs")
     public ModelAndView blogs(){
         mav.clear();
         mav.setViewName("BkSys/pages/blogs");
+        BlogPage blogPage = blogService.listBlogForBkSys(1);//第一次获取页面默认获取第一页博客
+        mav.addObject("blogPage",blogPage);
+        return mav;
     }
 
+    /**
+     * 传递查询的博客列表的数据，为前端异步刷新博客列表做准备
+     *
+     * @param currentPage
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("updateBlogListBk")
+    public BlogPage updateBlogList(int currentPage){
+        return blogService.listBlogForBkSys(currentPage);
+    }
+
+
+    /**
+     * 删除当前id的博客
+     * @param bId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("deleteBlog")
+    public OperateBlogResponse deleteBlog(int bId){
+        try{
+            blogService.deleteBlog(bId);
+            return new OperateBlogResponse(1,"删除成功");
+        }catch (Exception e){
+            return new OperateBlogResponse(0,e.getMessage());
+        }
+    }
 
     /**
      * 判断是否记住密码，

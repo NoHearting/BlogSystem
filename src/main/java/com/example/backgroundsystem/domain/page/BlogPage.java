@@ -1,6 +1,7 @@
 package com.example.backgroundsystem.domain.page;
 
 import com.example.backgroundsystem.domain.blogsys.BaseBlog;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonIgnoreProperties(value = { "handler" })  //在json序列化时忽略bean中的一些不需要转化的属性,不然会报错
 public class BlogPage {
 
     @Getter

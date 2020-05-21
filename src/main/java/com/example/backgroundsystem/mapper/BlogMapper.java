@@ -4,6 +4,7 @@ import com.example.backgroundsystem.domain.blogsys.Blog;
 import com.example.backgroundsystem.domain.blogsys.BlogNoContent;
 import com.example.backgroundsystem.domain.blogsys.Tag;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -99,7 +100,7 @@ public interface BlogMapper {
      * @param id
      */
     @Delete("delete from blog where bId = #{id}")
-    void deleteBolg(int id);
+    void deleteBlog(int id);
 
     /**
      * 查询所有的标签
@@ -109,6 +110,22 @@ public interface BlogMapper {
     List<Tag> listBlogTags();
 
     /**
+     *  根据博客ID查询标签
+     * @param bId
+     * @return
+     */
+    @Select("select tag.* from blog,tag where blog.bId = #{bId} and  blog.tId = tag.tId")
+    Tag getTagByBlogId(int bId);
+
+    /**
+     * 根据主键查询标签
+     * @param tId
+     * @return
+     */
+    @Select("select * from tag where tId = #{tId}")
+    Tag getTagById(int tId);
+
+    /**
      * 添加博客和标签之间的对应关系，即给博客加上标签
      * @param tId
      * @param bId
@@ -116,5 +133,14 @@ public interface BlogMapper {
     @Insert("insert into blog_tag(bId,tId) values(#{bId},#{tId})")
     void insertTagWithBlog(@Param("tId") int tId, @Param("bId") int bId);
 
+
+    @Results(id = "blog",value = {
+            @Result(property = "tag",column = "tId",javaType = com.example.backgroundsystem.domain.blogsys.Tag.class,
+                    one = @One(select = "com.example.backgroundsystem.mapper.BlogMapper.getTagById"
+                            ,fetchType = FetchType.LAZY
+                           ))
+    })
+    @Select("select bId,title,tId,writeTime from blog limit #{begin},#{num}")
+    List<Blog> listBlog(@Param("begin") int begin, @Param("num") int num);
 
 }

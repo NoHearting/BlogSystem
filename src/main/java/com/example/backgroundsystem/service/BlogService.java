@@ -34,6 +34,9 @@ public interface BlogService {
     void addBlogReadTimes(int id);
 
     void deleteBlog(int id);
+    void deleteBlogs(String bIds);
 
     List<Tag> listBlogTags();
+
+    BlogPage listBlogForBkSys(int currentPage);
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="BkSys/commons/header::header">
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/BkSys/css/style.css}">
     <!-- endinject -->
     <link rel="shortcut icon" th:href="@{/BkSys/images/favicon.png}" />
+    <link rel="stylesheet" th:href="@{/BkSys/css/myStyle.css}">
 </head>
 
 <body>
@@ -42,214 +43,66 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">博客</h4>
-                        <p class="card-description text-danger">
-                           共 66 条
+                        <p class="card-description text-danger" id="blog-counts">
+                           共 [[${blogPage.totalItems}]] 条
                         </p>
-                        <table class="table table-striped">
+                        <div>
+                            <button id="delete-all-button" type="button" class="btn btn-gradient-primary btn-sm btn-icon-text">
+                                <i class="mdi mdi-delete-sweep btn-icon-prepend"></i>
+                                批量删除
+                            </button>
+                            <button type="button" class="btn btn-gradient-primary btn-sm btn-icon-text">
+                                <i class="mdi mdi-plus-circle btn-icon-prepend"></i>
+                                <a th:href="@{/admin/addArticle}" id="blog-add" class="text-white">添加</a>
+                            </button>
+                        </div>
+                        <table class="table table-striped" id="blogs">
                             <thead>
                               <tr>
                                 <th>
-                                    <label class="form-check-label">
-                                      <input type="radio" class="form-check-input form-check-danger" name="delete" id="delete-all" >
-                                      <i class="input-helper"></i>
-                                    </label>
+                                    <input type="checkbox" id="delete-all">
                                 </th>
                                 <th>ID</th>
                                 <th>标题</th>
                                 <th>分类</th>
                                 <th>写作日期</th>
                                 <th>阅读量</th>
-                                <th>评论量</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
-                            <tbody>
-                              <tr>
+                            <tbody id="table-content">
+                              <tr th:each="blog:${blogPage.blogs}">
                                 <td>
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                        <i class="input-helper"></i>
-                                    </label>
+
+                                    <input type="checkbox" th:value="${blog.bId}">
                                 </td>
-                                <td>1</td>
-                                <td>第一篇文章</td>
-                                <td>C++</td>
-                                <td>2015-10-10</td>
-                                <td>100</td>
-                                <td>200</td>
+                                <td th:text="${blogPage.currentPage-1} * ${blogPage.pageMaxItems}+${blogStat.index+1}">1</td>
+                                <td th:text="${blog.title}">第一篇文章</td>
+                                <td th:text="${blog.tag.label}">C++</td>
+                                <td th:text="${blog.writeTime}">2015-10-10</td>
+                                <td th:text="${blog.readTimes}">100</td>
                                 <td>
-                                    <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                    <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
+                                    <a href="#" th:data-delete="${blog.bId}" class="delete-blog" title="删除"><i class="mdi mdi-delete-forever text-success"></i></a>
+                                    <a href="#"  title="编辑"><i class="mdi mdi-lead-pencil menu-icon text-success"></i></a>
+
                                 </td>
-                            </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
                               </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      <label class="form-check-label">
-                                          <input type="radio" class="form-check-input form-check-success" name="delete" id="delete-all" >
-                                          <i class="input-helper"></i>
-                                      </label>
-                                  </td>
-                                  <td>1</td>
-                                  <td>第一篇文章</td>
-                                  <td>C++</td>
-                                  <td>2015-10-10</td>
-                                  <td>100</td>
-                                  <td>200</td>
-                                  <td>
-                                      <a href="#"><i class="mdi mdi-delete-forever"></i></a>
-                                      <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
-                                  </td>
-                              </tr>
+
 
                             </tbody>
                         </table>
                     </div>
                 </div>
         </div>
+            <div class="center">
+                <ul class="pagination" id="blogs-nav">
+                    <li><a href="#">«</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a class="active" href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
+            </div>
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
@@ -262,6 +115,10 @@
   </div>
   <!-- container-scroller -->
   <div th:replace="BkSys/commons/footJs::footJs"></div>
+  <script th:src="@{/BkSys/js/customFunc.js}"></script>
+  <script>
+      updateNavForPage([[${blogPage.currentPage}]],[[${blogPage.totalPages}]])
+  </script>
 </body>
 
 </html>

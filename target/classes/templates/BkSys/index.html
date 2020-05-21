@@ -8,12 +8,12 @@
  
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-    <div th:replace="BkSys/commons/navbar::navbar(username=${username})"></div>
+    <div th:replace="BkSys/commons/navbar::navbar(username=${session.username})"></div>
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_sidebar.html -->
-      <div th:replace="BkSys/commons/sidebar::sidebar(username=${username})"></div>
+      <div th:replace="BkSys/commons/sidebar::sidebar(username=${session.username})"></div>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">

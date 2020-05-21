@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class operateBlogResponse {
+public class OperateBlogResponse {
     @Getter
     @Setter
     private int status;

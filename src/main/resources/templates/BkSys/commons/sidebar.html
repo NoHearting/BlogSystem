@@ -31,11 +31,11 @@
             <a class="nav-link" data-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="blogs">
                 <span class="menu-title">博客管理</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+
             </a>
             <div class="collapse" id="blogs">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">所有博客</a></li>
+                    <li class="nav-item"> <a class="nav-link" th:href="@{/admin/blogs}">所有博客</a></li>
                     <li class="nav-item"> <a class="nav-link" th:href="@{/admin/addArticle}">写博客</a></li>
                 </ul>
             </div>

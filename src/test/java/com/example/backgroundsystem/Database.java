@@ -68,4 +68,10 @@ public class Database {
     public void login(){
         System.out.println(bkSysMapper.login("root","1"));
     }
+
+
+    @Test
+    public void blogs(){
+        System.out.println(blogMapper.listBlog(0,5));
+    }
 }

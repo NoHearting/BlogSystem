@@ -129,4 +129,9 @@ public class TestController {
     public String testException() throws BlogException {
         throw new BlogException("测试错误",500);
     }
+
+    @RequestMapping("format")
+    public String testFormat(){
+        return "test/testFormat";
+    }
 }
